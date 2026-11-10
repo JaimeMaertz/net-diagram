@@ -1,0 +1,29 @@
+
+LLDP Remote Device Detail
+
+Local Interface: 0/1
+
+
+Remote Identifier: 5
+Chassis ID Subtype: MAC Address
+Chassis ID: C4:42:68:F8:9D:7B
+Port ID Subtype: MAC Address
+Port ID: C4:42:68:F8:9D:7B
+System Name: TS-1080-UC-C44268F89D7B
+System Description:  Linux 5.4.259-qgki-gc5181af37ec6 #1 SMP PREEMPT Thu May 28 14:04:34 EDT 2026 armv8l
+Port Description: eth0
+System Capabilities Supported: bridge, WLAN access point, router, station only
+System Capabilities Enabled: station only
+Management Address:
+    Type: IPv4
+    Address: 172.22.0.153
+Time to Live: 106 seconds
+Port VLAN:
+VLANs:
+
+                  Maximum Frame Size:
+
+Link Aggregation Information:
+  Aggregation Capable: Yes
+  Aggregation Status: No
+  Aggregation ID: 0

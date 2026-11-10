@@ -1,0 +1,15 @@
+System Description:                    C1300-48P-4X
+System Up Time (days,hour:min:sec):    03,02:27:46
+System Contact:
+System Name:                           switch151400
+System Location:
+System MAC Address:                    00:24:ab:15:14:00
+System Object ID:                         1.3.6.1.4.1.9.6.1.1006.48.5
+Unit        Type
+---- -----------------
+1          C1300-48P-4X
+2          C1300-48P-4X
+Unit Fans Status
+---- -----------
+1        OK
+2        fail

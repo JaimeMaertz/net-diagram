@@ -1,0 +1,25 @@
+
+                                   Link    Physical    Physical    Media           Flow
+Port       Name                    State   Mode        Status      Type            Control    VLAN
+---------  ----------------------  ------  ----------  ----------  --------------  ---------  ----------
+0/1        VID:1,Default,Video wi  Up      Auto        1000 Full   Copper          Inactive    1
+0/2        VID:1,Default,Video wi  Up      Auto        1000 Full   Copper          Inactive    1
+0/3        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/4        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/5        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/6        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/7        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/8        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/9        VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/10       VID:1,Default,Video wi  Up      Auto        1000 Full   Copper          Inactive    1
+0/11       VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+0/12       VID:1,Default,Video wi  Down    Auto                                    Inactive    1
+lag 1                              Down                                                        1
+lag 2                              Down                                                        1
+lag 3                              Down                                                        1
+lag 4                              Down                                                        1
+lag 5                              Down                                                        1
+lag 6                              Down                                                        1
+lag 7                              Down                                                        1
+                  lag 8                              Down                                                        1
+vlan 1                             Up      10 Half     10 Half     Unknown

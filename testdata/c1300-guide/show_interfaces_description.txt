@@ -1,0 +1,10 @@
+Port      Description
+-------   -----------
+gi1/0/1   Port that should be used for management only
+gi1/0/2
+gi1/0/3
+gi1/0/4   Output
+
+Ch       Description
+-------  -----------
+Po1

@@ -1,0 +1,17 @@
+Port limit mode: Enabled
+Usage threshold: 95%
+Trap: Enabled
+Legacy Mode: Disabled
+Inrush test: Enabled
+Class Error Detection: Enabled
+
+Unit     Module        Nominal Power       Allocated Power    Temp (c)            SW Version         PSE chipset HW Revision
+                       (w)                 (w)
+------   -----------   -------------       ---------------    -----------         -------------      ---------------------
+1        48P           320                 120(37.5%)         30                  1.222.3            PD69208-0x4BC2
+
+Interface      Admin        Oper            Power       Class     Device                        Priority
+--------       ----------   -------------   ---------   -------   -------------------           -----------
+gi1/0/1        Auto         On              15.4(30)    3         IPPhoneModelA                 Critical
+gi1/0/2        Auto         Searching       0           0                                       High
+gi1/0/3        Never        Off             0           0                                       Low

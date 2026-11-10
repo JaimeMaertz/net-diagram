@@ -1,0 +1,24 @@
+
+LLDP Remote Device Detail
+
+Local Interface: 0/2
+
+
+Remote Identifier: 11
+Chassis ID Subtype: Local
+Chassis ID: U1-C44268DE4CC4
+Port ID Subtype: MAC Address
+Port ID: C4:42:68:DE:4C:C4
+System Name:
+System Description:
+Port Description:
+System Capabilities Supported:
+System Capabilities Enabled:
+Time to Live: 2704 seconds
+Port VLAN:
+VLANs:
+
+Maximum Frame Size:
+
+Link Aggregation Information:
+                  

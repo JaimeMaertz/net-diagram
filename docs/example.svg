@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1398" height="688" viewBox="0 0 1398 688" font-family="Segoe UI, Arial, sans-serif">
+<style>
+.switch{fill:#1f2937;stroke:#111827}
+.swname{fill:#fff;font-size:14px;font-weight:600}
+.swsub{font-size:10px;fill:#d1d5db}
+.small{font-size:10px;fill:#4b5563}
+.port{stroke:#111827;stroke-width:1}
+.up{fill:#22c55e}.down{fill:#6b7280}
+.link{stroke:#f59e0b;stroke-width:2.5}
+.pnum{font-size:9px;fill:#000;text-anchor:middle}
+.wire{fill:none;stroke:#2563eb;stroke-width:1.5}
+.trunk{fill:none;stroke:#f59e0b;stroke-width:3}
+.dev{fill:#fff;stroke:#374151}
+.likely{stroke-dasharray:5 3}
+.virtual{fill:#f3f4f6;stroke-dasharray:2 2}
+.self{fill:#dbeafe;stroke:#2563eb;stroke-width:1.5}
+.beyond{fill:#fef3c7}
+.quiet{fill:#f9fafb;stroke-dasharray:4 3}
+.unread{fill:#fef3c7;stroke:#b45309}
+.dname{font-size:12px;font-weight:600;fill:#111827}
+.mono{font-family:Consolas, monospace;font-size:10px;fill:#111827}
+.note{font-size:9px;fill:#b45309}
+</style>
+<rect width="100%" height="100%" fill="#f9fafb"/>
+<rect x="38" y="30" width="352" height="64" rx="6" class="switch"/>
+<text x="48" y="48" class="swname">M4250-10G2F-PoE+</text>
+<text x="48" y="62" class="swsub">Netgear M4250-10G2F-PoE+ · 172.22.0.4 · fw 13.0.6.8</text>
+<rect x="58" y="72" width="18" height="18" class="port up link"><title>0/1 · up 1000 Full</title></rect>
+<text x="67" y="84" class="pnum">1</text>
+<rect x="84" y="72" width="18" height="18" class="port down"><title>0/2 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="93" y="84" class="pnum">2</text>
+<rect x="110" y="72" width="18" height="18" class="port down"><title>0/3 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="119" y="84" class="pnum">3</text>
+<rect x="136" y="72" width="18" height="18" class="port down"><title>0/4 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="145" y="84" class="pnum">4</text>
+<rect x="162" y="72" width="18" height="18" class="port down"><title>0/5 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="171" y="84" class="pnum">5</text>
+<rect x="188" y="72" width="18" height="18" class="port down"><title>0/6 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="197" y="84" class="pnum">6</text>
+<rect x="214" y="72" width="18" height="18" class="port down"><title>0/7 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="223" y="84" class="pnum">7</text>
+<rect x="240" y="72" width="18" height="18" class="port up"><title>0/8 VID:1,Default,Video with Dante audio · up 1000 Full · PoE 4.9 W</title></rect>
+<text x="249" y="84" class="pnum">8</text>
+<rect x="266" y="72" width="18" height="18" class="port down"><title>0/9 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="275" y="84" class="pnum">9</text>
+<rect x="292" y="72" width="18" height="18" class="port down"><title>0/10 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="301" y="84" class="pnum">10</text>
+<rect x="318" y="72" width="18" height="18" class="port down"><title>0/11 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="327" y="84" class="pnum">11</text>
+<rect x="344" y="72" width="18" height="18" class="port down"><title>0/12 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="353" y="84" class="pnum">12</text>
+<polyline points="249,94 249,108 133,108 133,128" class="wire"/>
+<rect x="45" y="128" width="176" height="52" rx="4" class="dev"/>
+<text x="51" y="143" class="dname">Extron 9D:41:57</text>
+<text x="51" y="157" class="small">TLP Pro 525M</text>
+<text x="51" y="171" class="mono">00:05:A6:9D:41:57<title></title></text>
+<text x="133" y="192" class="small" text-anchor="middle">0/8 · PoE 4.9 W</text>
+<rect x="38" y="276" width="1330" height="64" rx="6" class="switch"/>
+<text x="48" y="294" class="swname">M4250-26G4F-PoE+</text>
+<text x="48" y="308" class="swsub">Netgear M4250-26G4F-PoE+ · 172.22.0.157 · fw 13.0.5.20</text>
+<rect x="58" y="318" width="18" height="18" class="port up"><title>0/1 VID:1,Default,Video with Dante audio · up 1000 Full</title></rect>
+<text x="67" y="330" class="pnum">1</text>
+<rect x="84" y="318" width="18" height="18" class="port up"><title>0/2 VID:1,Default,Video with Dante audio · up 1000 Full</title></rect>
+<text x="93" y="330" class="pnum">2</text>
+<rect x="110" y="318" width="18" height="18" class="port up"><title>0/3 VID:1,Default,Video with Dante audio · up 1000 Full</title></rect>
+<text x="119" y="330" class="pnum">3</text>
+<rect x="136" y="318" width="18" height="18" class="port down"><title>0/4 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="145" y="330" class="pnum">4</text>
+<rect x="162" y="318" width="18" height="18" class="port up"><title>0/5 VID:1,Default,Video with Dante audio · up 1000 Full · PoE 1.7 W</title></rect>
+<text x="171" y="330" class="pnum">5</text>
+<rect x="188" y="318" width="18" height="18" class="port up"><title>0/6 VID:1,Default,Video with Dante audio · up 100 Full · PoE 4.3 W</title></rect>
+<text x="197" y="330" class="pnum">6</text>
+<rect x="214" y="318" width="18" height="18" class="port down"><title>0/7 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="223" y="330" class="pnum">7</text>
+<rect x="240" y="318" width="18" height="18" class="port up"><title>0/8 VID:1,Default,Video with Dante audio · up 1000 Full</title></rect>
+<text x="249" y="330" class="pnum">8</text>
+<rect x="266" y="318" width="18" height="18" class="port down"><title>0/9 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="275" y="330" class="pnum">9</text>
+<rect x="292" y="318" width="18" height="18" class="port down"><title>0/10 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="301" y="330" class="pnum">10</text>
+<rect x="318" y="318" width="18" height="18" class="port down"><title>0/11 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="327" y="330" class="pnum">11</text>
+<rect x="344" y="318" width="18" height="18" class="port down"><title>0/12 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="353" y="330" class="pnum">12</text>
+<rect x="370" y="318" width="18" height="18" class="port down"><title>0/13 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="379" y="330" class="pnum">13</text>
+<rect x="396" y="318" width="18" height="18" class="port down"><title>0/14 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="405" y="330" class="pnum">14</text>
+<rect x="422" y="318" width="18" height="18" class="port down"><title>0/15 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="431" y="330" class="pnum">15</text>
+<rect x="448" y="318" width="18" height="18" class="port down"><title>0/16 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="457" y="330" class="pnum">16</text>
+<rect x="474" y="318" width="18" height="18" class="port down"><title>0/17 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="483" y="330" class="pnum">17</text>
+<rect x="500" y="318" width="18" height="18" class="port down"><title>0/18 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="509" y="330" class="pnum">18</text>
+<rect x="526" y="318" width="18" height="18" class="port down"><title>0/19 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="535" y="330" class="pnum">19</text>
+<rect x="552" y="318" width="18" height="18" class="port down"><title>0/20 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="561" y="330" class="pnum">20</text>
+<rect x="578" y="318" width="18" height="18" class="port down"><title>0/21 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="587" y="330" class="pnum">21</text>
+<rect x="604" y="318" width="18" height="18" class="port down"><title>0/22 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="613" y="330" class="pnum">22</text>
+<rect x="630" y="318" width="18" height="18" class="port up"><title>0/23 VID:1,Default,Video with Dante audio · up 1000 Full</title></rect>
+<text x="639" y="330" class="pnum">23</text>
+<rect x="656" y="318" width="18" height="18" class="port down"><title>0/24 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="665" y="330" class="pnum">24</text>
+<rect x="682" y="318" width="18" height="18" class="port down"><title>0/25 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="691" y="330" class="pnum">25</text>
+<rect x="708" y="318" width="18" height="18" class="port up link"><title>0/26 · up 1000 Full</title></rect>
+<text x="717" y="330" class="pnum">26</text>
+<rect x="734" y="318" width="18" height="18" class="port down"><title>0/27 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="743" y="330" class="pnum">27</text>
+<rect x="760" y="318" width="18" height="18" class="port down"><title>0/28 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="769" y="330" class="pnum">28</text>
+<rect x="786" y="318" width="18" height="18" class="port down"><title>0/29 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="795" y="330" class="pnum">29</text>
+<rect x="812" y="318" width="18" height="18" class="port down"><title>0/30 VID:1,Default,Video with Dante audio · down</title></rect>
+<text x="821" y="330" class="pnum">30</text>
+<polyline points="67,340 67,402 133,402 133,422" class="wire"/>
+<rect x="45" y="422" width="176" height="52" rx="4" class="dev"/>
+<text x="51" y="437" class="dname">TesiraServer01234567</text>
+<text x="51" y="451" class="small">Biamp Systems</text>
+<text x="51" y="465" class="mono">78:45:01:90:3A:64  172.22.0.159<title></title></text>
+<text x="133" y="486" class="small" text-anchor="middle">0/1</text>
+<polyline points="93,340 93,394 323,394 323,422" class="wire"/>
+<rect x="235" y="422" width="176" height="80" rx="4" class="dev"/>
+<text x="241" y="437" class="dname">Biamp 8F:B7:BC</text>
+<text x="241" y="451" class="small">Biamp Systems</text>
+<text x="241" y="465" class="mono">78:45:01:8F:B7:BC<title></title></text>
+<text x="241" y="479" class="note">2 devices on this port: an unmanaged sw…</text>
+<text x="241" y="493" class="note">tch, or one device not yet known to be …</text>
+<rect x="235" y="512" width="176" height="80" rx="4" class="dev"/>
+<text x="241" y="527" class="dname">TesiraServer01234567</text>
+<text x="241" y="541" class="small">Biamp Systems</text>
+<text x="241" y="555" class="mono">78:45:01:90:3A:66  172.22.0.160<title></title></text>
+<text x="241" y="569" class="note">2 devices on this port: an unmanaged sw…</text>
+<text x="241" y="583" class="note">tch, or one device not yet known to be …</text>
+<text x="323" y="604" class="small" text-anchor="middle">0/2</text>
+<polyline points="119,340 119,386 513,386 513,422" class="wire"/>
+<rect x="425" y="422" width="176" height="52" rx="4" class="dev"/>
+<text x="431" y="437" class="dname">Audinate 74:CA:10</text>
+<text x="431" y="451" class="small">Audinate Pty L</text>
+<text x="431" y="465" class="mono">00:1D:C1:74:CA:10  172.22.0.156<title></title></text>
+<text x="513" y="486" class="small" text-anchor="middle">0/3</text>
+<polyline points="171,340 171,378 703,378 703,422" class="wire"/>
+<rect x="615" y="422" width="176" height="52" rx="4" class="dev"/>
+<text x="621" y="437" class="dname">TesiraVoltera01234568</text>
+<text x="621" y="451" class="small">Biamp Systems</text>
+<text x="621" y="465" class="mono">78:45:01:90:29:20  172.22.0.158<title></title></text>
+<text x="703" y="486" class="small" text-anchor="middle">0/5 · PoE 1.7 W</text>
+<polyline points="197,340 197,370 893,370 893,422" class="wire"/>
+<rect x="805" y="422" width="176" height="52" rx="4" class="dev"/>
+<text x="811" y="437" class="dname">Sennheiser A1:6D:0C</text>
+<text x="811" y="451" class="small">Sennheiser electronic GmbH &amp; Co. …</text>
+<text x="811" y="465" class="mono">00:1B:66:A1:6D:0C  172.22.0.161<title></title></text>
+<text x="893" y="486" class="small" text-anchor="middle">0/6 · PoE 4.3 W</text>
+<polyline points="249,340 249,362 1083,362 1083,422" class="wire"/>
+<rect x="995" y="422" width="176" height="34" rx="4" class="dev quiet"/>
+<text x="1001" y="436" class="small">link up, nothing learned</text>
+<text x="1001" y="449" class="small">(quiet, or just restarted)</text>
+<text x="1083" y="468" class="small" text-anchor="middle">0/8</text>
+<polyline points="639,340 639,354 1273,354 1273,422" class="wire"/>
+<rect x="1185" y="422" width="176" height="52" rx="4" class="dev self"/>
+<text x="1191" y="437" class="dname">Your Computer</text>
+<text x="1191" y="451" class="small">LAPTOP</text>
+<text x="1191" y="465" class="mono">7C:CF:0F:78:FD:37  172.22.0.248<title></title></text>
+<text x="1273" y="486" class="small" text-anchor="middle">0/23</text>
+<polyline points="67,94 67,108 12,108 12,262 717,262 717,276" class="trunk"/>
+<text x="711" y="258" class="small" text-anchor="end">0/1 ↔ 0/26</text>
+</svg>

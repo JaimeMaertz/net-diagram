@@ -1,0 +1,28 @@
+# Built binaries (attached to GitHub Releases instead)
+*.exe
+dist/
+
+# Snapshots and raw switch output from real reads: they hold your network's MACs and names
+netdiagram-snapshots/
+raw/
+*.snapshot.json
+
+# Editor and OS clutter
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Linux builds
+/netdiagram
+/probe
+
+# Your own data: the CLI's site.json / site.svg, a device database, sweeps, saved switch output
+/*.json
+/*.svg
+devices.json*
+*.bak
+*.xlsx
+*.csv
+saved-output/

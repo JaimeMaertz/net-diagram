@@ -1,0 +1,10 @@
+Active-image: flash://system/images/image_v12-03.ros
+  Version: 12.03
+  MD5 Digest: 23FA000012857D8855AABC7577AB5562
+  Date: 04-Jul-2014
+  Time: 15:03:07
+Inactive-image: flash://system/images/image_v12-01.ros
+  Version: 12.01
+  MD5 Digest: 3FA000012857D8855AABC7577AB8999
+  Date: 04-Feb-2001
+  Time: 11:13:17

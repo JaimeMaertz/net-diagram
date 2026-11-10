@@ -1,0 +1,6 @@
+
+Interface....... 0/3
+ifIndex......... 3
+Description..... VID:1,Default,Video with Dante audio
+MAC address..... 28:94:01:AF:35:BC
+Bit Offset Val.. 3

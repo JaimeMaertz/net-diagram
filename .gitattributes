@@ -1,0 +1,7 @@
+# LF in the repository; Windows batch files keep CRLF on checkout.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.xlsx binary
+*.png binary
+*.exe binary

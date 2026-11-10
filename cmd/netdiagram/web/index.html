@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>netdiagram</title>
+<style>
+  :root { --bg:#f3f4f6; --card:#fff; --ink:#111827; --mute:#6b7280; --line:#e5e7eb; --accent:#2563eb; --warn:#b45309; --bad:#b91c1c; --good:#15803d; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px "Segoe UI", Arial, sans-serif; color:var(--ink); background:var(--bg); }
+  header { background:#1f2937; color:#fff; padding:12px 20px; display:flex; align-items:center; gap:16px; }
+  header h1 { font-size:18px; margin:0; }
+  header .sub { color:#d1d5db; font-size:12px; }
+  main { padding:16px 20px; display:grid; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+  .card h2 { font-size:15px; margin:0 0 10px; display:flex; align-items:center; gap:8px; }
+  .step { display:inline-flex; width:22px; height:22px; border-radius:50%; background:var(--accent); color:#fff; font-size:12px; align-items:center; justify-content:center; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  input[type=text], input[type=password] { padding:6px 8px; border:1px solid #d1d5db; border-radius:6px; font:inherit; }
+  #subnets { width:420px; } #dir { width:420px; }
+  button { padding:7px 14px; border-radius:6px; border:1px solid var(--accent); background:var(--accent); color:#fff; font:inherit; cursor:pointer; }
+  button.ghost { background:#fff; color:var(--accent); }
+  button:disabled { opacity:.5; cursor:default; }
+  table { border-collapse:collapse; width:100%; margin-top:10px; }
+  th, td { text-align:left; padding:5px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:12px; color:var(--mute); font-weight:600; }
+  td.mono, .mono { font-family:Consolas, monospace; font-size:12px; }
+  .badge { display:inline-block; padding:1px 6px; border-radius:10px; font-size:11px; margin-right:3px; background:#e5e7eb; color:#374151; }
+  .badge.on { background:#dcfce7; color:var(--good); }
+  .status { color:var(--mute); font-size:13px; }
+  .err { color:var(--bad); }
+  .warn { color:var(--warn); }
+  .ok { color:var(--good); }
+  #diagram { overflow:auto; border:1px solid var(--line); border-radius:6px; background:#f9fafb; max-height:75vh; }
+  #diagram svg { display:block; }
+  .hidden { display:none; }
+  dialog { border:1px solid var(--line); border-radius:8px; padding:18px; width:360px; }
+  dialog h3 { margin:0 0 6px; font-size:15px; }
+  dialog label { display:block; margin:10px 0 3px; font-size:12px; color:var(--mute); }
+  dialog input { width:100%; }
+  dialog .row { justify-content:flex-end; margin-top:14px; }
+  .spin { display:inline-block; width:12px; height:12px; border:2px solid #93c5fd; border-top-color:var(--accent); border-radius:50%; animation:s 0.8s linear infinite; vertical-align:-2px; }
+  @keyframes s { to { transform:rotate(360deg); } }
+  tr.dim td { color:var(--mute); }
+</style>
+</head>
+<body>
+<header>
+  <h1>netdiagram</h1>
+  <span class="sub">Finds the switches on a network, reads them (read-only), and draws what's plugged in where.</span>
+</header>
+<main>
+  <section class="card">
+    <h2><span class="step">1</span> Scan</h2>
+    <div class="row">
+      <label for="subnets">Subnets</label>
+      <input id="subnets" type="text" placeholder="172.22.0.0/24, 10.0.0.0/24">
+      <button id="scanBtn">Scan</button>
+      <span id="scanStatus" class="status"></span>
+    </div>
+    <div id="initNote" class="status" style="margin-top:6px"></div>
+  </section>
+
+  <section class="card hidden" id="switchCard">
+    <h2><span class="step">2</span> Choose switches to read</h2>
+    <div class="row">
+      <label><input type="checkbox" id="showAll"> Show every host the scan found</label>
+    </div>
+    <table>
+      <thead><tr><th></th><th>IP</th><th>Name</th><th>Maker / model</th><th>MAC</th><th>Access</th><th>Login</th><th>Result</th></tr></thead>
+      <tbody id="hostRows"></tbody>
+    </table>
+    <div class="row" style="margin-top:12px">
+      <label for="dir">Save snapshots in</label>
+      <input id="dir" type="text">
+      <button id="readBtn">Read selected switches</button>
+      <span id="readStatus" class="status"></span>
+    </div>
+  </section>
+
+  <section class="card" id="mapCard">
+    <h2><span class="step">3</span> Map</h2>
+    <div class="row">
+      <select id="snapList"><option value="">Open a saved snapshot…</option></select>
+      <button class="ghost" id="saveSvg" disabled>Save diagram (SVG)</button>
+      <span id="mapFile" class="status"></span>
+    </div>
+    <div id="diagram" class="hidden" style="margin-top:10px"></div>
+    <table id="devTable" class="hidden">
+      <thead><tr><th>Switch</th><th>Port</th><th>Device</th><th>Model / maker</th><th>MAC · IP</th><th>Grouped by</th><th>Note</th></tr></thead>
+      <tbody id="devRows"></tbody>
+    </table>
+  </section>
+</main>
+
+<dialog id="loginDlg">
+  <form method="dialog">
+    <h3>Login for <span id="loginWho"></span></h3>
+    <div class="status">Saved in Windows Credential Manager as <span class="mono" id="loginTarget"></span>, never in a file.</div>
+    <label for="loginUser">User name</label>
+    <input id="loginUser" type="text" autocomplete="off">
+    <label for="loginPw">Password</label>
+    <input id="loginPw" type="password" autocomplete="off">
+    <div class="row">
+      <button value="skip" class="ghost">Skip this switch</button>
+      <button value="save" id="loginSave">Save and read</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const token = new URLSearchParams(location.search).get("t") || "";
+const $ = id => document.getElementById(id);
+let hosts = [], lastSvg = "";
+
+async function api(path, body) {
+  const opt = { headers: { "X-Token": token } };
+  if (body !== undefined) { opt.method = "POST"; opt.body = JSON.stringify(body); opt.headers["Content-Type"] = "application/json"; }
+  const r = await fetch(path, opt);
+  const j = await r.json().catch(() => ({ error: r.statusText }));
+  if (!r.ok || j.error) throw new Error(j.error || r.statusText);
+  return j;
+}
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+
+async function init() {
+  if (!token) { $("initNote").innerHTML = '<span class="err">Open netdiagram from netdiagram.exe; this page needs the address it prints.</span>'; return; }
+  try {
+    const i = await api("/api/init");
+    $("subnets").value = (i.subnets || []).join(", ");
+    $("dir").value = i.dir;
+    $("initNote").innerHTML = `Device database: <span class="mono">${esc(i.db)}</span> (${i.db_entries} entries)` +
+      (i.pinger_found ? "" : ` · <span class="err">pinger.exe not found at ${esc(i.pinger)}</span>`);
+    loadSnapList();
+  } catch (e) { $("initNote").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+}
+
+$("scanBtn").onclick = async () => {
+  $("scanBtn").disabled = true;
+  $("scanStatus").innerHTML = '<span class="spin"></span> Scanning… (a /24 takes about 4 s)';
+  try {
+    const s = await api("/api/scan", { subnets: $("subnets").value });
+    hosts = s.hosts || [];
+    const found = hosts.filter(h => h.candidate).length;
+    $("scanStatus").innerHTML = `${hosts.length} hosts answered of ${s.targets} in ${s.seconds.toFixed(1)} s · <b>${found}</b> switch${found === 1 ? "" : "es"} found`;
+    $("switchCard").classList.remove("hidden");
+    drawHosts();
+  } catch (e) { $("scanStatus").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+  $("scanBtn").disabled = false;
+};
+$("showAll").onchange = drawHosts;
+
+function access(h) {
+  if (!h.ports) return "";
+  return [[22,"SSH"],[23,"Telnet"],[80,"Web"],[443,"HTTPS"]].map(([p,n]) => `<span class="badge ${h.ports[p] ? "on" : ""}">${n}</span>`).join("");
+}
+function drawHosts() {
+  const all = $("showAll").checked;
+  const list = hosts.filter(h => all || h.vendor);
+  list.sort((a, b) => (b.candidate - a.candidate) || ipNum(a.ip) - ipNum(b.ip));
+  $("hostRows").innerHTML = list.map(h => {
+    const i = hosts.indexOf(h);
+    const can = h.candidate && h.supported;
+    let why = "";
+    if (h.vendor && !h.supported) why = `<span class="warn">${esc(h.vendor)}: not supported yet</span>`;
+    else if (h.vendor && !h.candidate) why = `<span class="warn">no SSH or Telnet open</span>`;
+    return `<tr class="${h.vendor ? "" : "dim"}">
+      <td><input type="checkbox" data-i="${i}" ${can ? "checked" : ""} ${can ? "" : "disabled"}></td>
+      <td class="mono">${esc(h.ip)}</td>
+      <td>${esc(h.name || "")}</td>
+      <td>${esc(h.model || h.manufacturer || "")}</td>
+      <td class="mono">${esc(h.mac || "")}</td>
+      <td>${access(h)}</td>
+      <td>${h.vendor ? (h.has_login ? '<span class="ok">saved</span>' : "none") : ""}</td>
+      <td id="res-${i}">${why}</td></tr>`;
+  }).join("") || `<tr><td colspan="8" class="status">No switch makers (Netgear, Cisco, Aruba) answered. Tick "Show every host" to see what did.</td></tr>`;
+}
+const ipNum = ip => ip.split(".").reduce((a, o) => a * 256 + +o, 0);
+
+function askLogin(h) {
+  return new Promise(resolve => {
+    $("loginWho").textContent = `${h.name || h.model || h.vendor} (${h.ip})`;
+    $("loginTarget").textContent = "netdiagram:" + h.mac;
+    $("loginUser").value = "admin"; $("loginPw").value = "";
+    const d = $("loginDlg");
+    d.onclose = () => resolve(d.returnValue === "save" ? { user: $("loginUser").value, password: $("loginPw").value } : null);
+    d.showModal(); $("loginPw").focus();
+  });
+}
+
+$("readBtn").onclick = async () => {
+  const picked = [...document.querySelectorAll("#hostRows input:checked")].map(c => hosts[+c.dataset.i]);
+  if (!picked.length) { $("readStatus").innerHTML = '<span class="warn">Tick at least one switch.</span>'; return; }
+  $("readBtn").disabled = true;
+  const go = [];
+  for (const h of picked) {
+    const cell = $("res-" + hosts.indexOf(h));
+    if (!h.has_login) {
+      const l = await askLogin(h);
+      if (!l) { cell.innerHTML = '<span class="warn">skipped: no login</span>'; continue; }
+      try { await api("/api/login", { mac: h.mac, user: l.user, password: l.password }); h.has_login = true; }
+      catch (e) { cell.innerHTML = `<span class="err">${esc(e.message)}</span>`; continue; }
+    }
+    cell.innerHTML = '<span class="spin"></span> reading…';
+    go.push(h);
+  }
+  if (!go.length) { $("readBtn").disabled = false; return; }
+  $("readStatus").innerHTML = `<span class="spin"></span> Reading ${go.length} switch${go.length === 1 ? "" : "es"}…`;
+  try {
+    const r = await api("/api/discover", { dir: $("dir").value, switches: go.map(h => ({ ip: h.ip, mac: h.mac, vendor: h.vendor })) });
+    for (const s of r.switches) {
+      const h = go.find(x => x.ip === s.ip);
+      const cell = $("res-" + hosts.indexOf(h));
+      cell.innerHTML = s.ok ? `<span class="ok">read: ${esc(s.model)}</span>` : `<span class="err">${esc(s.error)}</span>`;
+    }
+    $("readStatus").textContent = r.file ? "" : "Nothing was read.";
+    if (r.snapshot) { showMap(r); loadSnapList(r.file); }
+  } catch (e) { $("readStatus").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+  $("readBtn").disabled = false;
+};
+
+function showMap(r) {
+  lastSvg = r.svg;
+  $("diagram").innerHTML = r.svg;
+  $("diagram").classList.remove("hidden");
+  $("saveSvg").disabled = false;
+  $("mapFile").innerHTML = `Snapshot: <span class="mono">${esc(r.file)}</span>`;
+  const sw = Object.fromEntries((r.snapshot.switches || []).map(s => [s.host, s.db_name || s.name || s.model]));
+  const devs = r.snapshot.devices || [];
+  $("devRows").innerHTML = devs.map(d => `<tr>
+    <td>${esc(sw[d.switch] || d.switch)}</td><td class="mono">${esc(d.port)}</td>
+    <td><b>${esc(d.name)}</b>${d.jobsite ? `<br><span class="status">${esc(d.jobsite)}</span>` : ""}</td>
+    <td>${esc(d.model || d.manufacturer || "")}</td>
+    <td class="mono">${d.interfaces.map(i => esc(i.mac) + (i.ip ? " · " + esc(i.ip) : "") + (i.name ? ` <span class="status">${esc(i.name)}</span>` : "")).join("<br>")}</td>
+    <td>${esc({ single: "one MAC", database: "database", lldp: "LLDP", likely: "likely (adjacent MACs)", self: "this PC" }[d.grouping] || d.grouping)}${d.virtual ? " · VM" : ""}${d.beyond ? ' · <span class="warn">beyond an unread switch</span>' : ""}</td>
+    <td class="warn">${esc(d.note || "")}</td></tr>`).join("");
+  $("devTable").classList.toggle("hidden", !devs.length);
+}
+
+async function loadSnapList(select) {
+  try {
+    const list = await api("/api/snapshots?dir=" + encodeURIComponent($("dir").value));
+    $("snapList").innerHTML = '<option value="">Open a saved snapshot…</option>' +
+      list.map(s => `<option value="${esc(s.file)}" ${s.file === select ? "selected" : ""}>${esc(s.name)}</option>`).join("");
+  } catch (e) { /* no folder yet */ }
+}
+$("snapList").onchange = async () => {
+  if (!$("snapList").value) return;
+  try { showMap(await api("/api/snapshot?file=" + encodeURIComponent($("snapList").value))); }
+  catch (e) { $("mapFile").innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+};
+$("dir").onchange = () => loadSnapList();
+
+$("saveSvg").onclick = () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([lastSvg], { type: "image/svg+xml" }));
+  const f = ($("mapFile").textContent.split(/[\\/]/).pop() || "netdiagram.json").replace(/\.json$/, ".svg");
+  a.download = f; a.click();
+};
+
+init();
+</script>
+</body>
+</html>

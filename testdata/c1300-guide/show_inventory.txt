@@ -1,0 +1,2 @@
+NAME: "1", DESCR: "48-Port Gigabit with 4-Port 10-Gigabit Managed Switch"
+PID: xx350-4x-K9, VID: V01, SN: 123456789

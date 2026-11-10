@@ -1,0 +1,24 @@
+
+LLDP Remote Device Detail
+
+Local Interface: 0/10
+
+
+Remote Identifier: 1
+Chassis ID Subtype: Local
+Chassis ID: PC-01
+Port ID Subtype: MAC Address
+Port ID: 7C:CF:0F:78:FD:37
+System Name:
+System Description:
+Port Description:
+System Capabilities Supported:
+System Capabilities Enabled:
+Time to Live: 2723 seconds
+Port VLAN:
+VLANs:
+
+Maximum Frame Size:
+
+Link Aggregation Information:
+                  

@@ -1,0 +1,11 @@
+
+Address Entries Currently in Use............... 6
+
+VLAN ID  MAC Address         Interface              IfIndex  Status
+-------  ------------------  ---------------------  -------  ------------
+1        08:00:27:B8:B8:C7   0/10                   10       Learned
+1        28:94:01:AF:35:BA   CPU Interface:  5/1    17       Management
+1        28:94:01:AF:35:BD   vlan 1                 26       Management
+1        7C:CF:0F:78:FD:37   0/10                   10       Learned
+1        C4:42:68:DE:4C:C4   0/2                    2        Learned
+1        C4:42:68:F8:9D:7B   0/1                    1        Learned

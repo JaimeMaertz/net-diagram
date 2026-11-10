@@ -1,0 +1,631 @@
+{
+  "taken": "2026-01-01T12:00:00Z",
+  "switches": [
+    {
+      "host": "172.22.0.4",
+      "vendor": "Netgear",
+      "model": "M4250-10G2F-PoE+",
+      "firmware": "13.0.6.8",
+      "serial": "70VF000000001",
+      "macs": [
+        "28:94:01:AF:35:BA",
+        "28:94:01:AF:35:BC",
+        "28:94:01:AF:35:BD"
+      ],
+      "ports": [
+        {
+          "name": "0/1",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "Trunk",
+          "poe_status": "Searching",
+          "neighbors": [
+            {
+              "chassis_id": "28:94:01:BD:77:56",
+              "port_id": "0/26",
+              "system_desc": "M4250-26G4F-PoE+ 26x1G PoE+ 300W and 4xSFP Managed Switch, 13.0.5.20, 1.0.0.13",
+              "port_desc": "0/26",
+              "mgmt_ip": "172.22.0.157",
+              "caps_enabled": "bridge, router"
+            }
+          ],
+          "macs": [
+            {
+              "mac": "00:1B:66:A1:6D:0C",
+              "vlan": "1"
+            },
+            {
+              "mac": "00:1D:C1:74:CA:10",
+              "vlan": "1"
+            },
+            {
+              "mac": "28:94:01:BD:77:56",
+              "vlan": "1"
+            },
+            {
+              "mac": "28:94:01:BD:77:58",
+              "vlan": "1"
+            },
+            {
+              "mac": "28:94:01:BD:77:59",
+              "vlan": "1"
+            },
+            {
+              "mac": "78:45:01:8F:B7:BC",
+              "vlan": "1"
+            },
+            {
+              "mac": "78:45:01:90:29:20",
+              "vlan": "1"
+            },
+            {
+              "mac": "78:45:01:90:3A:64",
+              "vlan": "1"
+            },
+            {
+              "mac": "78:45:01:90:3A:66",
+              "vlan": "1"
+            },
+            {
+              "mac": "7C:CF:0F:78:FD:37",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/2",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/3",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/4",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/5",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/6",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/7",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/8",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_mw": 4900,
+          "poe_status": "Delivering Power",
+          "macs": [
+            {
+              "mac": "00:05:A6:9D:41:57",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/9",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/10",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/11",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/12",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        }
+      ],
+      "arp": [
+        {
+          "mac": "02:02:BC:80:00:02",
+          "ip": "250.251.252.254"
+        }
+      ]
+    },
+    {
+      "host": "172.22.0.157",
+      "vendor": "Netgear",
+      "model": "M4250-26G4F-PoE+",
+      "firmware": "13.0.5.20",
+      "serial": "7K8A000000002",
+      "macs": [
+        "28:94:01:BD:77:56",
+        "28:94:01:BD:77:58",
+        "28:94:01:BD:77:59"
+      ],
+      "ports": [
+        {
+          "name": "0/1",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_status": "Searching",
+          "neighbors": [
+            {
+              "chassis_id": "78:45:01:90:3A:64",
+              "port_id": "78:45:01:90:3A:64",
+              "system_name": "TesiraServer01234567",
+              "system_desc": ".",
+              "port_desc": "eth0",
+              "mgmt_ip": "172.22.0.159",
+              "caps_enabled": "station only"
+            }
+          ],
+          "macs": [
+            {
+              "mac": "78:45:01:90:3A:64",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/2",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_status": "Searching",
+          "neighbors": [
+            {
+              "chassis_id": "78:45:01:90:3A:64",
+              "port_id": "78:45:01:90:3A:66",
+              "system_name": "TesiraServer01234567",
+              "system_desc": ".",
+              "port_desc": "eth0.2",
+              "mgmt_ip": "172.22.0.159",
+              "caps_enabled": "station only"
+            }
+          ],
+          "macs": [
+            {
+              "mac": "78:45:01:8F:B7:BC",
+              "vlan": "1"
+            },
+            {
+              "mac": "78:45:01:90:3A:66",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/3",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_status": "Searching",
+          "macs": [
+            {
+              "mac": "00:1D:C1:74:CA:10",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/4",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/5",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_mw": 1700,
+          "poe_status": "Delivering Power",
+          "neighbors": [
+            {
+              "chassis_id": "78:45:01:90:29:20",
+              "port_id": "78:45:01:90:29:20",
+              "system_name": "TesiraVoltera01234568",
+              "system_desc": ".",
+              "port_desc": "P1",
+              "mgmt_ip": "172.22.0.158",
+              "caps_enabled": "station only"
+            }
+          ],
+          "macs": [
+            {
+              "mac": "78:45:01:90:29:20",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/6",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "100 Full",
+          "vlan": "1",
+          "poe_mw": 4300,
+          "poe_status": "Delivering Power",
+          "macs": [
+            {
+              "mac": "00:1B:66:A1:6D:0C",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/7",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/8",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/9",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/10",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/11",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/12",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/13",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/14",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/15",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/16",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/17",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/18",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/19",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/20",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/21",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/22",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/23",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "1",
+          "poe_status": "Searching",
+          "neighbors": [
+            {
+              "chassis_id": "LAPTOP",
+              "port_id": "7C:CF:0F:78:FD:37"
+            }
+          ],
+          "macs": [
+            {
+              "mac": "7C:CF:0F:78:FD:37",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/24",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1",
+          "poe_status": "Searching"
+        },
+        {
+          "name": "0/25",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/26",
+          "up": true,
+          "speed": "1000 Full",
+          "vlan": "Trunk",
+          "neighbors": [
+            {
+              "chassis_id": "28:94:01:AF:35:BA",
+              "port_id": "0/1",
+              "system_desc": "M4250-10G2F-PoE+ 10x1G PoE+ 125W and 2xSFP Managed Switch, 13.0.6.8, 1.0.0.11",
+              "port_desc": "0/1",
+              "mgmt_ip": "172.22.0.4",
+              "caps_enabled": "bridge, router"
+            }
+          ],
+          "macs": [
+            {
+              "mac": "00:05:A6:9D:41:57",
+              "vlan": "1"
+            },
+            {
+              "mac": "28:94:01:AF:35:BA",
+              "vlan": "1"
+            },
+            {
+              "mac": "28:94:01:AF:35:BC",
+              "vlan": "1"
+            },
+            {
+              "mac": "28:94:01:AF:35:BD",
+              "vlan": "1"
+            }
+          ]
+        },
+        {
+          "name": "0/27",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/28",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/29",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        },
+        {
+          "name": "0/30",
+          "description": "VID:1,Default,Video with Dante audio",
+          "up": false,
+          "vlan": "1"
+        }
+      ],
+      "arp": [
+        {
+          "mac": "02:02:BC:80:00:02",
+          "ip": "250.251.252.254"
+        },
+        {
+          "mac": "00:1D:C1:74:CA:10",
+          "ip": "169.254.230.177"
+        }
+      ]
+    }
+  ],
+  "devices": [
+    {
+      "name": "TesiraServer01234567",
+      "manufacturer": "Biamp Systems",
+      "interfaces": [
+        {
+          "mac": "78:45:01:90:3A:64",
+          "ip": "172.22.0.159",
+          "source": "lldp"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/1",
+      "grouping": "lldp"
+    },
+    {
+      "name": "Biamp 8F:B7:BC",
+      "manufacturer": "Biamp Systems",
+      "interfaces": [
+        {
+          "mac": "78:45:01:8F:B7:BC"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/2",
+      "grouping": "single",
+      "note": "2 devices on this port: an unmanaged switch, or one device not yet known to be one"
+    },
+    {
+      "name": "TesiraServer01234567",
+      "manufacturer": "Biamp Systems",
+      "interfaces": [
+        {
+          "mac": "78:45:01:90:3A:66",
+          "ip": "172.22.0.160",
+          "source": "lldp"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/2",
+      "grouping": "lldp",
+      "note": "2 devices on this port: an unmanaged switch, or one device not yet known to be one"
+    },
+    {
+      "name": "Audinate 74:CA:10",
+      "manufacturer": "Audinate Pty L",
+      "interfaces": [
+        {
+          "mac": "00:1D:C1:74:CA:10",
+          "ip": "172.22.0.156"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/3",
+      "grouping": "single"
+    },
+    {
+      "name": "TesiraVoltera01234568",
+      "manufacturer": "Biamp Systems",
+      "interfaces": [
+        {
+          "mac": "78:45:01:90:29:20",
+          "ip": "172.22.0.158",
+          "source": "lldp"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/5",
+      "grouping": "lldp"
+    },
+    {
+      "name": "Sennheiser A1:6D:0C",
+      "manufacturer": "Sennheiser electronic GmbH \u0026 Co. KG",
+      "interfaces": [
+        {
+          "mac": "00:1B:66:A1:6D:0C",
+          "ip": "172.22.0.161"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/6",
+      "grouping": "single"
+    },
+    {
+      "name": "Your Computer",
+      "model": "LAPTOP",
+      "manufacturer": "LCFC(Hefei) Electronics Technology co., ltd",
+      "interfaces": [
+        {
+          "mac": "7C:CF:0F:78:FD:37",
+          "ip": "172.22.0.248",
+          "source": "lldp"
+        }
+      ],
+      "switch": "172.22.0.157",
+      "port": "0/23",
+      "grouping": "lldp",
+      "self": true
+    },
+    {
+      "name": "Extron 9D:41:57",
+      "model": "TLP Pro 525M",
+      "jobsite": "Example Job",
+      "manufacturer": "Extron Electronics",
+      "interfaces": [
+        {
+          "mac": "00:05:A6:9D:41:57"
+        }
+      ],
+      "switch": "172.22.0.4",
+      "port": "0/8",
+      "grouping": "single"
+    }
+  ],
+  "links": [
+    {
+      "from_switch": "172.22.0.4",
+      "from_port": "0/1",
+      "to_switch": "172.22.0.157",
+      "to_port": "0/26"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+
+        High     Max                      Output  Output
+Intf    Power   Power     Class   Power   Current Voltage      Status            Fault
+                 (mW)              (mW)     (mA)   (V)                           Status
+------ ------- -------- -------- -------  ------- -------  ----------------- -----------------
+0/1      Yes   32000    4        6300     118     53       Delivering Power  No Error
+0/2      Yes   32000    Unknown  0        0       0        Searching         No Error
+0/3      Yes   32000    Unknown  0        0       0        Searching         No Error
+0/4      Yes   32000    Unknown  0        0       0        Searching         No Error
+0/5      Yes   32000    Unknown  0        0       0        Searching         No Error
+0/6      Yes   32000    Unknown  0        0       0        Searching         No Error
+0/7      Yes   32000    Unknown  0        0       0        Searching         No Error
+0/8      Yes   32000    Unknown  0        0       0        Searching         No Error

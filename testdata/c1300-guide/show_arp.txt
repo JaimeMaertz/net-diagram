@@ -1,0 +1,8 @@
+ARP timeout: 80000 Seconds
+
+VLAN          Interface                IP Address        HW Address                  Status
+-------       ---------------          ----------        -----------------           -------
+VLAN 1        gi1/0/1                  10.7.1.102        00:10:B5:04:DB:4B           Dynamic
+VLAN 1        gi1/0/2                  10.7.1.135        00:50:22:00:2A:A4           Static
+VLAN 2        gi1/0/1                  11.7.1.135        00:12:22:00:2A:A4           Dynamic
+              gi1/0/2                  12.10.1.13        00:11:55:04:DB:4B           Dynamic

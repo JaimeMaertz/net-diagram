@@ -1,0 +1,7 @@
+
+Terminal length
+----------------
+For Current Session............................ 24
+For Serial Console............................. 24
+For Telnet Sessions............................ 24
+For SSH Sessions............................... 24

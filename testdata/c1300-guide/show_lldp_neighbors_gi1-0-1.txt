@@ -1,0 +1,21 @@
+Device ID: 00:00:00:11:11:11
+Port ID: gi1/0/1
+System Name: ts-7800-2
+Capabilities: B
+System description:
+Port description:
+Management address: 172.16.1.1
+Time To Live: 90 seconds
+802.3 MAC/PHY Configuration/Status
+Auto-negotiation support: Supported.
+Auto-negotiation status: Enabled.
+Auto-negotiation Advertised Capabilities: 100BASE-TX full duplex, 1000BASE-T full duplex.
+Operational MAU type: 1000BaseTFD
+802.3 Power via MDI
+MDI Power support Port Class: PD
+PSE MDI Power Support: Not Supported
+802.1 PVID: 1
+LLDP-MED Device type: Endpoint class 2.
+Hardware revision: 2.1
+Manufacturer name: VP
+Model name: TR12
