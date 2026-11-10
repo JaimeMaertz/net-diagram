@@ -140,8 +140,8 @@ func TestGrouping(t *testing.T) {
 func TestCommonName(t *testing.T) {
 	cases := map[string][]string{
 		"Rack-Tesira": {"Rack-Tesira", "Rack-Tesira-Dante"},
-		"Rack DSP":      {"Rack DSP control", "Rack DSP Dante"},
-		"Alpha":         {"Alpha", "Zulu"},
+		"Rack DSP":    {"Rack DSP control", "Rack DSP Dante"},
+		"Alpha":       {"Alpha", "Zulu"},
 	}
 	for want, names := range cases {
 		if got := commonName(names); got != want {

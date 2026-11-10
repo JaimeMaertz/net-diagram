@@ -1,4 +1,4 @@
-module github.com/JaimeMaertz/netdiagram
+module github.com/JaimeMaertz/net-diagram
 
 go 1.26.0
 

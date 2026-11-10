@@ -17,7 +17,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/JaimeMaertz/netdiagram"
+	"github.com/JaimeMaertz/net-diagram"
 )
 
 //go:embed web/index.html

@@ -15,7 +15,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/JaimeMaertz/netdiagram"
+	"github.com/JaimeMaertz/net-diagram"
 )
 
 func main() {

@@ -20,7 +20,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/JaimeMaertz/netdiagram"
+	"github.com/JaimeMaertz/net-diagram"
 )
 
 type list []string

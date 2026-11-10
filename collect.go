@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/JaimeMaertz/netdiagram/internal/ciscossh"
+	"github.com/JaimeMaertz/net-diagram/internal/ciscossh"
 )
 
 // Collect logs into a switch and runs its vendor's commands, returning each command's output.
