@@ -11,8 +11,9 @@ Bug reports, device output that doesn't parse, and pull requests are welcome.
 
 ## Your contribution and the license
 
-This project is under an MIT-based license with a no-resale condition (see [LICENSE](LICENSE)).
-The copyright holder also grants separate licenses for commercial resale. So that this stays
+This project is under an MIT-based license with no-resale and no-bundling conditions (see
+[LICENSE](LICENSE)). The copyright holder also grants separate licenses for commercial resale
+and bundling. So that this stays
 possible for code that includes yours, by opening a pull request you agree to the following:
 
 1. Your contribution is your own original work, or you have the right to submit it.

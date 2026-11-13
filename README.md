@@ -140,12 +140,15 @@ useful thing to send if a switch's output doesn't parse.
 
 ## License
 
-Source-available: an MIT-based license with a no-resale condition (see [LICENSE](LICENSE)),
-not an OSI open-source license. You're free to use it and modify it,
-including at work and on paid jobs, to share it free of charge, and to charge for installing,
-training on or supporting it. Keep the copyright notice and the license with any copy.
+Source-available: an MIT-based license with no-resale and no-bundling conditions (see
+[LICENSE](LICENSE)), not an OSI open-source license. You're free to use it and modify it,
+including at work and on paid jobs (installing it on a client's computers included), to share
+it free of charge on its own, and to charge for installing, training on or supporting it. Keep
+the copyright notice and the license with any copy.
 
-What needs permission is selling it, or selling a product or hosted service built on it. For
-that, contact JaimeMaertz@gmail.com.
+What needs permission is selling it, selling a product or hosted service built on it, or
+bundling it with a commercial product: shipping it in or alongside software, hardware or a
+service that is sold, licensed or rented, even if this tool is included free. For that,
+contact JaimeMaertz@gmail.com.
 
 Contributions are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md).
