@@ -137,6 +137,7 @@ useful thing to send if a switch's output doesn't parse.
 - [pinger](https://github.com/JaimeMaertz/pinger): the subnet sweep net-diagram runs
 - [ip-table-database-editor](https://github.com/JaimeMaertz/ip-table-database-editor): fills the device database the map is named from
 - [ip-switcher](https://github.com/JaimeMaertz/ip-switcher): a tray app for switching your adapter between DHCP and static presets
+- [net-watch](https://github.com/JaimeMaertz/net-watch): shows which devices go on and off the network, scan after scan
 
 ## License
 
