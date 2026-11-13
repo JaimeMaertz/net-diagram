@@ -1,4 +1,4 @@
-# netdiagram
+# net-diagram
 
 Finds the managed switches on a network, logs into the ones you choose, reads their LLDP
 neighbors, MAC tables, ports and PoE, and draws how the switches and devices connect. It is
@@ -21,27 +21,29 @@ Windows Credential Manager. Parsing and drawing from saved output run anywhere.
 ## Requirements
 
 - **[pinger](https://github.com/JaimeMaertz/pinger)**, from its release zip, on PATH or in the
-  same folder as `netdiagram.exe`. netdiagram runs `pinger -json` to sweep the subnet, and reads
+  same folder as `net-diagram.exe`. net-diagram runs `pinger -json` to sweep the subnet, and reads
   `oui.txt` (manufacturer names) and `devices.json` (your device names, optional) from beside
-  pinger. Without `oui.txt` the map still draws, with blank manufacturers, and netdiagram prints
+  pinger. Without `oui.txt` the map still draws, with blank manufacturers, and net-diagram prints
   a warning.
 - To build from source: Go 1.26 or later.
 - Telnet (Netgear) or SSH (Cisco) enabled on the switch, and a login with privileged access.
 
 ## Use it
 
-Double-click `netdiagram.exe`, or run it with no arguments. It starts a local server on
+Double-click `net-diagram.exe`, or run it with no arguments. It starts a local server on
 `127.0.0.1:8765` and opens your browser:
 
 1. **Scan.** The subnets default to a /24 around each of your PC's adapters. The scan lists
    every Netgear, Cisco or Aruba host with its SSH, Telnet, web and HTTPS ports. A switch is
    ticked when it's readable (Netgear or Cisco with Telnet or SSH open).
-2. **Read.** For a ticked switch with no saved login, netdiagram asks for one and saves it
-   to Credential Manager as `netdiagram:<switch MAC>`, then reads every ticked switch. The
+2. **Read.** For a ticked switch with no saved login, net-diagram asks for one and saves it
+   to Credential Manager as `net-diagram:<switch MAC>` (a login saved by v1.0.0, as
+   `netdiagram:<switch MAC>`, is still read), then reads every ticked switch. The
    scan's MAC-to-IP pairs give IPs to devices the switch's own ARP table doesn't know, and
    the PC you're running from is drawn as "Your Computer".
 3. **Map.** You get the diagram and a device table. Each read is saved as a snapshot in
-   `Documents\netdiagram\<date_time>.json`, and saved snapshots reopen from the list without
+   `Documents\net-diagram\<date_time>.json` (v1.0.0's `Documents\netdiagram\` is used while only it
+   exists), and saved snapshots reopen from the list without
    logging in. **Save diagram** downloads the SVG. Each switch's raw output is also kept, in
    `raw\<ip>_<date_time>\` beside the snapshots. If a parser can't read it (for example, a
    firmware that lays a table out differently), the read stops and names that folder.
@@ -53,10 +55,10 @@ Close the console window to stop it.
 ### Command line
 
 ```
-netdiagram discover -host 172.22.0.4 -cred netdiagram:<MAC> -out site.json   (repeat -host/-cred per switch)
-netdiagram discover -host 172.22.0.4 -from saved-output\ -out site.json      (saved output, any OS)
-netdiagram draw site.json -o site.svg
-netdiagram version
+net-diagram discover -host 172.22.0.4 -cred net-diagram:<MAC> -out site.json   (repeat -host/-cred per switch)
+net-diagram discover -host 172.22.0.4 -from saved-output\ -out site.json      (saved output, any OS)
+net-diagram draw site.json -o site.svg
+net-diagram version
 ```
 
 | `discover` option | Meaning                                                           |
@@ -69,7 +71,7 @@ netdiagram version
 | `-raw`            | also save each switch's raw output under this folder              |
 | `-db`, `-oui`     | device database and manufacturer list, if not pinger's            |
 
-To save a login without the browser: `cmdkey /generic:netdiagram:<MAC> /user:<name> /pass`.
+To save a login without the browser: `cmdkey /generic:net-diagram:<MAC> /user:<name> /pass`.
 The password is never printed or written to a file.
 
 ## How the map is worked out
@@ -103,7 +105,7 @@ an orange line between the two ports.
 ```
 go test ./...                                    # parsers, the map and the drawing, on testdata/
 cmd /c "go test ."                               # on Windows: adds the Credential Manager round trip
-GOOS=windows go build -o netdiagram.exe ./cmd/netdiagram
+GOOS=windows go build -o net-diagram.exe ./cmd/net-diagram
 GOOS=windows go build -o probe.exe ./cmd/probe
 ```
 
@@ -115,7 +117,7 @@ useful thing to send if a switch's output doesn't parse.
 
 | Path                     | What it holds                                                                                                   |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| `cmd/netdiagram/`        | the program: the local server and its API, `discover` and `draw`, and the web page (`web/index.html`, embedded) |
+| `cmd/net-diagram/`        | the program: the local server and its API, `discover` and `draw`, and the web page (`web/index.html`, embedded) |
 | `cmd/probe/`             | saves one switch's raw output, for fixtures                                                                     |
 | `scan.go`                | runs pinger's sweep, finds switch makers, probes their ports, checks for logins                                 |
 | `model.go`               | the snapshot: switches, ports, neighbors, devices, links                                                        |
@@ -125,14 +127,14 @@ useful thing to send if a switch's output doesn't parse.
 | `svg.go`                 | the drawing                                                                                                     |
 | `telnet.go`              | the Telnet CLI session (Netgear)                                                                                |
 | `internal/ciscossh/`     | the SSH CLI session (Cisco)                                                                                     |
-| `allowlist.go`           | every command netdiagram may send, each a `show`                                                                |
+| `allowlist.go`           | every command net-diagram may send, each a `show`                                                                |
 | `cred_windows.go`        | Credential Manager                                                                                              |
 | `devicedb.go`            | reading pinger's `devices.json` and `oui.txt`                                                                   |
 | `testdata/`              | a real M4250's output (MACs and serials altered), Cisco's guide examples, and a two-switch snapshot             |
 
 ## Related tools
 
-- [pinger](https://github.com/JaimeMaertz/pinger): the subnet sweep netdiagram runs
+- [pinger](https://github.com/JaimeMaertz/pinger): the subnet sweep net-diagram runs
 - [ip-table-database-editor](https://github.com/JaimeMaertz/ip-table-database-editor): fills the device database the map is named from
 - [ip-switcher](https://github.com/JaimeMaertz/ip-switcher): a tray app for switching your adapter between DHCP and static presets
 

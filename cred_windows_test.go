@@ -9,7 +9,7 @@ import (
 
 // Writes a throwaway login, reads it back, and removes it with cmdkey.
 func TestCredentialRoundTrip(t *testing.T) {
-	const target = "netdiagram:test-round-trip-delete-me"
+	const target = "net-diagram:test-round-trip-delete-me"
 	defer exec.Command("cmdkey", "/delete:"+target).Run()
 	if err := WriteCredential(target, "tester", "pässwörd-123"); err != nil {
 		t.Fatal(err)

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-// allowed holds every command netdiagram may send to a switch, as typed. Each one only reads.
+// allowed holds every command net-diagram may send to a switch, as typed. Each one only reads.
 // Nothing here enters configuration mode or changes a setting; "terminal length" and its
 // equivalents change only the current session's paging.
 var allowed = map[string]bool{

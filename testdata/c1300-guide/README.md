@@ -4,7 +4,7 @@ Not a real switch. Each file is a command's example output from the *Cisco Catal
 Series CLI Guide* (Cisco's published PDF, last modified
 2026-04-28). The column spacing is the PDF's layout, except in `show interfaces status` and
 `show interfaces description`, whose spacing the PDF loses: there the words are the guide's and
-the columns were lined up by hand. The LLDP detail is cut to the fields netdiagram reads. The examples
+the columns were lined up by hand. The LLDP detail is cut to the fields net-diagram reads. The examples
 don't describe one switch, so the ports in one file don't match another's.
 
 | File                            | Guide page |
@@ -20,5 +20,5 @@ don't describe one switch, so the ports in one file don't match another's.
 | show_power_inline.txt           | 1030–1031  |
 | show_arp.txt                    | 605        |
 
-Replace this folder's role with a real switch's output (`probe -vendor Cisco`, or a netdiagram read's
+Replace this folder's role with a real switch's output (`probe -vendor Cisco`, or a net-diagram read's
 `raw\` folder) when one is read: put it in `testdata/c1300/` and point the tests at both.

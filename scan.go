@@ -24,7 +24,7 @@ type Host struct {
 
 	// Filled in by FindSwitches.
 	Vendor    string       `json:"vendor,omitempty"`    // Netgear, Cisco, Aruba: a switch maker
-	Supported bool         `json:"supported,omitempty"` // netdiagram can read this vendor today
+	Supported bool         `json:"supported,omitempty"` // net-diagram can read this vendor today
 	Candidate bool         `json:"candidate,omitempty"` // a switch maker with telnet or SSH open
 	Ports     map[int]bool `json:"ports,omitempty"`     // 22, 23, 80, 443: open or not
 	HasLogin  bool         `json:"has_login,omitempty"` // a login is saved for it
@@ -128,10 +128,16 @@ func ProbePorts(ip string, ports []int, timeout time.Duration) map[int]bool {
 }
 
 // CredTarget is the Credential Manager name a switch's login is saved under.
-func CredTarget(mac string) string { return "netdiagram:" + mac }
+func CredTarget(mac string) string { return "net-diagram:" + mac }
 
-// LoginTarget is the Credential Manager name to read a switch's login from.
-func LoginTarget(mac string) string { return CredTarget(mac) }
+// LoginTarget is the Credential Manager name to read a switch's login from: CredTarget, or
+// "netdiagram:<MAC>", the name v1.0.0 saved logins under.
+func LoginTarget(mac string) string {
+	if !credExists(CredTarget(mac)) && credExists("netdiagram:"+mac) {
+		return "netdiagram:" + mac
+	}
+	return CredTarget(mac)
+}
 
 func credExists(target string) bool {
 	_, _, err := ReadCredential(target)

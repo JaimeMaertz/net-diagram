@@ -1,9 +1,9 @@
-// netdiagram reads switches and draws how they and their devices connect.
+// net-diagram reads switches and draws how they and their devices connect.
 //
-//	netdiagram                       the web interface in the browser (also: netdiagram gui [-no-browser])
-//	netdiagram discover -host 172.22.0.4 -cred netdiagram:28:94:01:AF:35:BD -out site.json [-raw dir]
-//	netdiagram discover -host 172.22.0.4 -from testdata\m4250 -out site.json    (saved output, any OS)
-//	netdiagram draw site.json -o site.svg
+//	net-diagram                       the web interface in the browser (also: net-diagram gui [-no-browser])
+//	net-diagram discover -host 172.22.0.4 -cred net-diagram:28:94:01:AF:35:BD -out site.json [-raw dir]
+//	net-diagram discover -host 172.22.0.4 -from testdata\m4250 -out site.json    (saved output, any OS)
+//	net-diagram draw site.json -o site.svg
 //
 // -host and -cred (or -from) repeat, one per switch, in the same order. The device database is the
 // devices.json beside the pinger on PATH (the database that pinger names devices from), else beside
@@ -38,7 +38,7 @@ func main() {
 	}
 	switch os.Args[1] {
 	case "version", "-version", "--version":
-		fmt.Println("netdiagram", version)
+		fmt.Println("net-diagram", version)
 	case "gui":
 		gui(os.Args[2:])
 	case "discover":
@@ -52,9 +52,9 @@ func main() {
 
 func usage() {
 	fmt.Fprintln(os.Stderr, `usage:
-  netdiagram                       (the web interface; also: netdiagram gui [-no-browser])
-  netdiagram discover [-vendor Netgear|Cisco] -host IP (-cred TARGET | -from DIR) [-host … ] -out snapshot.json [-raw DIR] [-db devices.json] [-oui oui.txt]
-  netdiagram draw snapshot.json -o diagram.svg`)
+  net-diagram                       (the web interface; also: net-diagram gui [-no-browser])
+  net-diagram discover [-vendor Netgear|Cisco] -host IP (-cred TARGET | -from DIR) [-host … ] -out snapshot.json [-raw DIR] [-db devices.json] [-oui oui.txt]
+  net-diagram draw snapshot.json -o diagram.svg`)
 	os.Exit(2)
 }
 
@@ -167,7 +167,7 @@ func findPingerFile(name string) string {
 func warnMissingOUI(path string) {
 	if _, err := os.Stat(path); err != nil {
 		fmt.Fprintf(os.Stderr, "warning: no manufacturer list at %s; manufacturer names will be blank. "+
-			"Keep pinger's oui.txt beside pinger (or beside netdiagram), or pass -oui.\n", path)
+			"Keep pinger's oui.txt beside pinger (or beside net-diagram), or pass -oui.\n", path)
 	}
 }
 
@@ -216,7 +216,7 @@ func macsOf(d netdiagram.Device) string {
 
 func check(err error) {
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "netdiagram:", err)
+		fmt.Fprintln(os.Stderr, "net-diagram:", err)
 		os.Exit(1)
 	}
 }

@@ -4,8 +4,8 @@
 // (and the per-port commands those call for) and saves each output raw to a folder, for building
 // and testing parsers.
 //
-//	probe -vendor Netgear -host 172.22.0.4 -cred netdiagram:28:94:01:AF:35:BD -out testdata\m4250
-//	probe -vendor Cisco -host 172.22.0.100 -cred netdiagram:<MAC> -out testdata\c1300
+//	probe -vendor Netgear -host 172.22.0.4 -cred net-diagram:28:94:01:AF:35:BD -out testdata\m4250
+//	probe -vendor Cisco -host 172.22.0.100 -cred net-diagram:<MAC> -out testdata\c1300
 package main
 
 import (

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>netdiagram</title>
+<title>net-diagram</title>
 <style>
   :root { --bg:#f3f4f6; --card:#fff; --ink:#111827; --mute:#6b7280; --line:#e5e7eb; --accent:#2563eb; --warn:#b45309; --bad:#b91c1c; --good:#15803d; }
   * { box-sizing: border-box; }
@@ -45,7 +45,7 @@
 </head>
 <body>
 <header>
-  <h1>netdiagram</h1>
+  <h1>net-diagram</h1>
   <span class="sub">Finds the switches on a network, reads them (read-only), and draws what's plugged in where.</span>
 </header>
 <main>
@@ -123,7 +123,7 @@ async function api(path, body) {
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
 
 async function init() {
-  if (!token) { $("initNote").innerHTML = '<span class="err">Open netdiagram from netdiagram.exe; this page needs the address it prints.</span>'; return; }
+  if (!token) { $("initNote").innerHTML = '<span class="err">Open net-diagram from net-diagram.exe; this page needs the address it prints.</span>'; return; }
   try {
     const i = await api("/api/init");
     $("subnets").value = (i.subnets || []).join(", ");
@@ -179,7 +179,7 @@ const ipNum = ip => ip.split(".").reduce((a, o) => a * 256 + +o, 0);
 function askLogin(h) {
   return new Promise(resolve => {
     $("loginWho").textContent = `${h.name || h.model || h.vendor} (${h.ip})`;
-    $("loginTarget").textContent = "netdiagram:" + h.mac;
+    $("loginTarget").textContent = "net-diagram:" + h.mac;
     $("loginUser").value = "admin"; $("loginPw").value = "";
     const d = $("loginDlg");
     d.onclose = () => resolve(d.returnValue === "save" ? { user: $("loginUser").value, password: $("loginPw").value } : null);
@@ -253,7 +253,7 @@ $("dir").onchange = () => loadSnapList();
 $("saveSvg").onclick = () => {
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([lastSvg], { type: "image/svg+xml" }));
-  const f = ($("mapFile").textContent.split(/[\\/]/).pop() || "netdiagram.json").replace(/\.json$/, ".svg");
+  const f = ($("mapFile").textContent.split(/[\\/]/).pop() || "net-diagram.json").replace(/\.json$/, ".svg");
   a.download = f; a.click();
 };
 

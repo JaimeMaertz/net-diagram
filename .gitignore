@@ -3,7 +3,7 @@
 dist/
 
 # Snapshots and raw switch output from real reads: they hold your network's MACs and names
-netdiagram-snapshots/
+net-diagram-snapshots/
 raw/
 *.snapshot.json
 
@@ -15,7 +15,7 @@ raw/
 Thumbs.db
 
 # Linux builds
-/netdiagram
+/net-diagram
 /probe
 
 # Your own data: the CLI's site.json / site.svg, a device database, sweeps, saved switch output

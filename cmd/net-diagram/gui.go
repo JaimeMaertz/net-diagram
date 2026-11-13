@@ -53,7 +53,7 @@ func gui(args []string) {
 		check(err)
 	}
 	url := fmt.Sprintf("http://%s/?t=%s", ln.Addr(), token)
-	fmt.Println("netdiagram is running at", url)
+	fmt.Println("net-diagram is running at", url)
 	fmt.Println("Close this window to stop it.")
 	if !contains(args, "-no-browser") {
 		openBrowser(url)
@@ -286,12 +286,23 @@ func findPinger() string {
 	return findPingerFile(name)
 }
 
+// defaultSnapshotDir is Documents\net-diagram, or Documents\netdiagram (where v1.0.0 saved them)
+// while that one exists and the new one doesn't, so earlier reads stay in the list.
 func defaultSnapshotDir() string {
 	home, err := os.UserHomeDir()
 	if err != nil {
-		return "netdiagram-snapshots"
+		return "net-diagram-snapshots"
 	}
-	return filepath.Join(home, "Documents", "netdiagram")
+	dir := filepath.Join(home, "Documents", "net-diagram")
+	if older := filepath.Join(home, "Documents", "netdiagram"); !exists(dir) && exists(older) {
+		return older
+	}
+	return dir
+}
+
+func exists(p string) bool {
+	_, err := os.Stat(p)
+	return err == nil
 }
 
 func openBrowser(url string) {
