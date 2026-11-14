@@ -106,6 +106,13 @@ func discover(args []string) {
 		self = netdiagram.LocalMACs()
 	}
 	snap := netdiagram.Build(switches, db, oui, nil, self)
+	if len(froms) != len(hosts) {
+		// Live: ask the devices sharing a port whether they're access points (SSH banner, web server).
+		if fp := netdiagram.FingerprintAPs(snap); len(fp) > 0 {
+			netdiagram.MarkAccessPoints(&snap, db, fp)
+		}
+		netdiagram.MarkGateways(&snap, db, netdiagram.LocalGateways())
+	}
 	b, _ := json.MarshalIndent(snap, "", "  ")
 	check(os.WriteFile(*out, b, 0o644))
 	for _, d := range snap.Devices {

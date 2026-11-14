@@ -232,6 +232,11 @@ func (g *guiServer) discover(req map[string]any) (any, error) {
 	}
 	g.mu.Unlock()
 	snap := netdiagram.Build(switches, db, oui, arp, netdiagram.LocalMACs())
+	// Ask the devices sharing a port whether they're access points (SSH banner, web server).
+	if fp := netdiagram.FingerprintAPs(snap); len(fp) > 0 {
+		netdiagram.MarkAccessPoints(&snap, db, fp)
+	}
+	netdiagram.MarkGateways(&snap, db, netdiagram.LocalGateways())
 
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return nil, err

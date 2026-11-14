@@ -199,19 +199,11 @@ func Build(switches []Switch, db DeviceDB, oui OUI, extraARP []ARP, self map[str
 		}
 		// The box itself first, then any VMs bridged through it.
 		sort.SliceStable(devs, func(i, j int) bool { return !devs[i].Virtual && devs[j].Virtual })
-		physical := 0
-		for _, d := range devs {
-			if !d.Virtual {
-				physical++
-			}
-		}
-		if physical > 1 && !where[macs[0]].beyond {
-			for i := range devs {
-				devs[i].Note = fmt.Sprintf("%d devices on this port: an unmanaged switch, or one device not yet known to be one", physical)
-			}
-		}
 		snap.Devices = append(snap.Devices, devs...)
 	}
+	// Access points, and each port's note (several devices on one port); gateways the database names.
+	MarkAccessPoints(&snap, db, nil)
+	MarkGateways(&snap, db, nil)
 	return snap
 }
 

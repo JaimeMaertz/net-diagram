@@ -248,7 +248,7 @@ function showMap(r) {
     <td><b>${esc(d.name)}</b>${d.jobsite ? `<br><span class="status">${esc(d.jobsite)}</span>` : ""}</td>
     <td>${esc(d.model || d.manufacturer || "")}</td>
     <td class="mono">${d.interfaces.map(i => esc(i.mac) + (i.ip ? " · " + esc(i.ip) : "") + (i.name ? ` <span class="status">${esc(i.name)}</span>` : "")).join("<br>")}</td>
-    <td>${esc({ single: "one MAC", database: "database", lldp: "LLDP", likely: "likely (adjacent MACs)", self: "this PC" }[d.grouping] || d.grouping)}${d.virtual ? " · VM" : ""}${d.beyond ? ' · <span class="warn">beyond an unread switch</span>' : ""}</td>
+    <td>${esc({ single: "one MAC", database: "database", lldp: "LLDP", likely: "likely (adjacent MACs)", self: "this PC" }[d.grouping] || d.grouping)}${d.virtual ? " · VM" : ""}${d.access_point ? " · <b>access point</b>" : ""}${d.gateway ? " · <b>gateway</b>" : ""}${d.beyond ? ' · <span class="warn">beyond an unread switch</span>' : ""}</td>
     <td class="warn">${esc(d.note || "")}</td></tr>`).join("");
   $("devTable").classList.toggle("hidden", !devs.length);
 }

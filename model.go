@@ -70,6 +70,8 @@ type Snapshot struct {
 	Switches []Switch  `json:"switches"`
 	Devices  []Device  `json:"devices"`
 	Links    []Link    `json:"links"`
+	// Gateways are the default gateways of the PC that read the switches, as they were then.
+	Gateways []string `json:"gateways,omitempty"`
 }
 
 // Device is one box on the network, with one or more MACs.
@@ -90,6 +92,15 @@ type Device struct {
 	Virtual bool   `json:"virtual,omitempty"` // a virtual machine's MAC (VirtualBox, VMware, Hyper-V)
 	Self    bool   `json:"self,omitempty"`    // the PC the scan ran from ("Your Computer")
 	Note    string `json:"note,omitempty"`
+	// AccessPoint says why the device is taken for a Wi-Fi access point: "LLDP", "device database", or
+	// "likely: <what its SSH or web server showed>". Empty when it isn't one.
+	AccessPoint string `json:"access_point,omitempty"`
+	// Via is the first MAC of the access point this device reaches the network through: the access point
+	// shares its switch port and is the only one there.
+	Via string `json:"via,omitempty"`
+	// Gateway says why the device is taken for the network's gateway: "this PC's default gateway" (one
+	// of its addresses is in Snapshot.Gateways) or "device database". Empty when it isn't one.
+	Gateway string `json:"gateway,omitempty"`
 }
 
 // Interface is one MAC of a device.

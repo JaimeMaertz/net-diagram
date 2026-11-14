@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1398" height="688" viewBox="0 0 1398 688" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1398" height="702" viewBox="0 0 1398 702" font-family="Segoe UI, Arial, sans-serif">
 <style>
 .switch{fill:#1f2937;stroke:#111827}
 .swname{fill:#fff;font-size:14px;font-weight:600}
@@ -15,6 +15,10 @@
 .virtual{fill:#f3f4f6;stroke-dasharray:2 2}
 .self{fill:#dbeafe;stroke:#2563eb;stroke-width:1.5}
 .beyond{fill:#fef3c7}
+.ap{fill:#ecfdf5;stroke:#059669;stroke-width:1.5}
+.via{fill:none;stroke:#059669;stroke-width:1}
+.gw{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2}
+.gwnote{font-size:9px;font-weight:600;fill:#6d28d9}
 .quiet{fill:#f9fafb;stroke-dasharray:4 3}
 .unread{fill:#fef3c7;stroke:#b45309}
 .dname{font-size:12px;font-weight:600;fill:#111827}
@@ -119,54 +123,60 @@
 <rect x="812" y="318" width="18" height="18" class="port down"><title>0/30 VID:1,Default,Video with Dante audio · down</title></rect>
 <text x="821" y="330" class="pnum">30</text>
 <polyline points="67,340 67,402 133,402 133,422" class="wire"/>
-<rect x="45" y="422" width="176" height="52" rx="4" class="dev"/>
+<rect x="45" y="422" width="176" height="66" rx="4" class="dev"/>
 <text x="51" y="437" class="dname">TesiraServer01234567</text>
 <text x="51" y="451" class="small">Biamp Systems</text>
-<text x="51" y="465" class="mono">78:45:01:90:3A:64  172.22.0.159<title></title></text>
-<text x="133" y="486" class="small" text-anchor="middle">0/1</text>
+<text x="51" y="465" class="mono">78:45:01:90:3A:64<title></title></text>
+<text x="51" y="479" class="mono">  172.22.0.159<title></title></text>
+<text x="133" y="500" class="small" text-anchor="middle">0/1</text>
 <polyline points="93,340 93,394 323,394 323,422" class="wire"/>
 <rect x="235" y="422" width="176" height="80" rx="4" class="dev"/>
 <text x="241" y="437" class="dname">Biamp 8F:B7:BC</text>
 <text x="241" y="451" class="small">Biamp Systems</text>
 <text x="241" y="465" class="mono">78:45:01:8F:B7:BC<title></title></text>
-<text x="241" y="479" class="note">2 devices on this port: an unmanaged sw…</text>
-<text x="241" y="493" class="note">tch, or one device not yet known to be …</text>
-<rect x="235" y="512" width="176" height="80" rx="4" class="dev"/>
+<text x="241" y="479" class="note">2 devices on this port: an unmanaged</text>
+<text x="241" y="493" class="note">switch, or one device not yet known to …</text>
+<rect x="235" y="512" width="176" height="94" rx="4" class="dev"/>
 <text x="241" y="527" class="dname">TesiraServer01234567</text>
 <text x="241" y="541" class="small">Biamp Systems</text>
-<text x="241" y="555" class="mono">78:45:01:90:3A:66  172.22.0.160<title></title></text>
-<text x="241" y="569" class="note">2 devices on this port: an unmanaged sw…</text>
-<text x="241" y="583" class="note">tch, or one device not yet known to be …</text>
-<text x="323" y="604" class="small" text-anchor="middle">0/2</text>
+<text x="241" y="555" class="mono">78:45:01:90:3A:66<title></title></text>
+<text x="241" y="569" class="mono">  172.22.0.160<title></title></text>
+<text x="241" y="583" class="note">2 devices on this port: an unmanaged</text>
+<text x="241" y="597" class="note">switch, or one device not yet known to …</text>
+<text x="323" y="618" class="small" text-anchor="middle">0/2</text>
 <polyline points="119,340 119,386 513,386 513,422" class="wire"/>
-<rect x="425" y="422" width="176" height="52" rx="4" class="dev"/>
+<rect x="425" y="422" width="176" height="66" rx="4" class="dev"/>
 <text x="431" y="437" class="dname">Audinate 74:CA:10</text>
 <text x="431" y="451" class="small">Audinate Pty L</text>
-<text x="431" y="465" class="mono">00:1D:C1:74:CA:10  172.22.0.156<title></title></text>
-<text x="513" y="486" class="small" text-anchor="middle">0/3</text>
+<text x="431" y="465" class="mono">00:1D:C1:74:CA:10<title></title></text>
+<text x="431" y="479" class="mono">  172.22.0.156<title></title></text>
+<text x="513" y="500" class="small" text-anchor="middle">0/3</text>
 <polyline points="171,340 171,378 703,378 703,422" class="wire"/>
-<rect x="615" y="422" width="176" height="52" rx="4" class="dev"/>
+<rect x="615" y="422" width="176" height="66" rx="4" class="dev"/>
 <text x="621" y="437" class="dname">TesiraVoltera01234568</text>
 <text x="621" y="451" class="small">Biamp Systems</text>
-<text x="621" y="465" class="mono">78:45:01:90:29:20  172.22.0.158<title></title></text>
-<text x="703" y="486" class="small" text-anchor="middle">0/5 · PoE 1.7 W</text>
+<text x="621" y="465" class="mono">78:45:01:90:29:20<title></title></text>
+<text x="621" y="479" class="mono">  172.22.0.158<title></title></text>
+<text x="703" y="500" class="small" text-anchor="middle">0/5 · PoE 1.7 W</text>
 <polyline points="197,340 197,370 893,370 893,422" class="wire"/>
-<rect x="805" y="422" width="176" height="52" rx="4" class="dev"/>
+<rect x="805" y="422" width="176" height="66" rx="4" class="dev"/>
 <text x="811" y="437" class="dname">Sennheiser A1:6D:0C</text>
 <text x="811" y="451" class="small">Sennheiser electronic GmbH &amp; Co. …</text>
-<text x="811" y="465" class="mono">00:1B:66:A1:6D:0C  172.22.0.161<title></title></text>
-<text x="893" y="486" class="small" text-anchor="middle">0/6 · PoE 4.3 W</text>
+<text x="811" y="465" class="mono">00:1B:66:A1:6D:0C<title></title></text>
+<text x="811" y="479" class="mono">  172.22.0.161<title></title></text>
+<text x="893" y="500" class="small" text-anchor="middle">0/6 · PoE 4.3 W</text>
 <polyline points="249,340 249,362 1083,362 1083,422" class="wire"/>
 <rect x="995" y="422" width="176" height="34" rx="4" class="dev quiet"/>
 <text x="1001" y="436" class="small">link up, nothing learned</text>
 <text x="1001" y="449" class="small">(quiet, or just restarted)</text>
 <text x="1083" y="468" class="small" text-anchor="middle">0/8</text>
 <polyline points="639,340 639,354 1273,354 1273,422" class="wire"/>
-<rect x="1185" y="422" width="176" height="52" rx="4" class="dev self"/>
+<rect x="1185" y="422" width="176" height="66" rx="4" class="dev self"/>
 <text x="1191" y="437" class="dname">Your Computer</text>
 <text x="1191" y="451" class="small">LAPTOP</text>
-<text x="1191" y="465" class="mono">7C:CF:0F:78:FD:37  172.22.0.248<title></title></text>
-<text x="1273" y="486" class="small" text-anchor="middle">0/23</text>
+<text x="1191" y="465" class="mono">7C:CF:0F:78:FD:37<title></title></text>
+<text x="1191" y="479" class="mono">  172.22.0.248<title></title></text>
+<text x="1273" y="500" class="small" text-anchor="middle">0/23</text>
 <polyline points="67,94 67,108 12,108 12,262 717,262 717,276" class="trunk"/>
 <text x="711" y="258" class="small" text-anchor="end">0/1 ↔ 0/26</text>
 </svg>

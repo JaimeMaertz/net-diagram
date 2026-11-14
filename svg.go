@@ -185,8 +185,22 @@ func SVG(s Snapshot) string {
 				fmt.Fprintf(&body, `<text x="%.0f" y="%.0f" class="small">switch, not read</text>`+"\n", cx+6, dy+27)
 				dy += 32 + 10
 			}
+			// A device reached through an access point hangs indented beneath it, on a line from the
+			// access point's left edge.
+			apTop := map[string]float64{} // access point's first MAC → the bottom of its box
 			for _, d := range devs[port] {
-				h := deviceBox(&body, d, cx, dy)
+				if top, ok := apTop[d.Via]; ok && d.Via != "" {
+					h := deviceBox(&body, d, cx+apIndent, dy, devW-apIndent)
+					lx := cx + apIndent/2
+					fmt.Fprintf(&body, `<polyline points="%.0f,%.0f %.0f,%.0f %.0f,%.0f" class="via"/>`+"\n",
+						lx, top, lx, dy+h/2, cx+apIndent, dy+h/2)
+					dy += h + 10
+					continue
+				}
+				h := deviceBox(&body, d, cx, dy, devW)
+				if d.AccessPoint != "" {
+					apTop[d.Interfaces[0].MAC] = dy + h
+				}
 				dy += h + 10
 			}
 			if len(devs[port]) == 0 && !linkPort[port] {
@@ -249,6 +263,10 @@ func SVG(s Snapshot) string {
 .virtual{fill:#f3f4f6;stroke-dasharray:2 2}
 .self{fill:#dbeafe;stroke:#2563eb;stroke-width:1.5}
 .beyond{fill:#fef3c7}
+.ap{fill:#ecfdf5;stroke:#059669;stroke-width:1.5}
+.via{fill:none;stroke:#059669;stroke-width:1}
+.gw{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2}
+.gwnote{font-size:9px;font-weight:600;fill:#6d28d9}
 .quiet{fill:#f9fafb;stroke-dasharray:4 3}
 .unread{fill:#fef3c7;stroke:#b45309}
 .dname{font-size:12px;font-weight:600;fill:#111827}
@@ -352,14 +370,37 @@ func wireLevels(from, to []float64) ([]int, int) {
 	return level, top
 }
 
-// deviceBox draws one device and returns its height.
-func deviceBox(b *strings.Builder, d Device, x, y float64) float64 {
-	lines := 2 + len(d.Interfaces)
+// apIndent is how far a device reached through an access point sits in from the column's edge.
+const apIndent = 16
+
+// deviceBox draws one device, w wide, and returns its height.
+func deviceBox(b *strings.Builder, d Device, x, y float64, w float64) float64 {
+	chars := func(full int) int { return full * int(w) / devW } // text clipped to the box's width
+	// Each interface is "MAC  IP" on one line, or the IP on a line of its own when both don't fit
+	// (Consolas at 10 px is about 5.5 px a character).
+	monoFit := int((w - 12) / 5.5)
+	var mono []string
+	var monoTitle []string
+	for _, in := range d.Interfaces {
+		t := in.MAC
+		if in.IP != "" {
+			t += "  " + in.IP
+		}
+		if len(t) <= monoFit || in.IP == "" {
+			mono, monoTitle = append(mono, t), append(monoTitle, in.Name)
+		} else {
+			mono, monoTitle = append(mono, in.MAC, "  "+in.IP), append(monoTitle, in.Name, in.Name)
+		}
+	}
+	lines := 2 + len(mono)
 	if d.Grouping == "likely" {
 		lines++
 	}
 	if d.Note != "" {
 		lines += 2
+	}
+	if d.Gateway != "" {
+		lines++
 	}
 	h := float64(10 + lines*lineH)
 	cls := "dev"
@@ -374,9 +415,15 @@ func deviceBox(b *strings.Builder, d Device, x, y float64) float64 {
 	if d.Grouping == "likely" {
 		cls += " likely"
 	}
-	fmt.Fprintf(b, `<rect x="%.0f" y="%.0f" width="%d" height="%.0f" rx="4" class="%s"/>`+"\n", x, y, devW, h, cls)
+	if d.AccessPoint != "" {
+		cls += " ap"
+	}
+	if d.Gateway != "" {
+		cls += " gw"
+	}
+	fmt.Fprintf(b, `<rect x="%.0f" y="%.0f" width="%.0f" height="%.0f" rx="4" class="%s"/>`+"\n", x, y, w, h, cls)
 	ty := y + 15
-	fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="dname">%s</text>`+"\n", x+6, ty, esc(clip(d.Name, 26)))
+	fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="dname">%s</text>`+"\n", x+6, ty, esc(clip(d.Name, chars(26))))
 	ty += lineH
 	sub := d.Model
 	if sub == "" {
@@ -385,25 +432,30 @@ func deviceBox(b *strings.Builder, d Device, x, y float64) float64 {
 	if d.Beyond {
 		sub = strings.TrimSuffix("beyond an unread switch · "+sub, " · ")
 	}
-	fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="small">%s</text>`+"\n", x+6, ty, esc(clip(sub, 34)))
-	for _, in := range d.Interfaces {
+	fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="small">%s</text>`+"\n", x+6, ty, esc(clip(sub, chars(34))))
+	for i, t := range mono {
 		ty += lineH
-		t := in.MAC
-		if in.IP != "" {
-			t += "  " + in.IP
-		}
-		fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="mono">%s<title>%s</title></text>`+"\n", x+6, ty, esc(t), esc(in.Name))
+		fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="mono">%s<title>%s</title></text>`+"\n", x+6, ty, esc(t), esc(monoTitle[i]))
 	}
 	if d.Grouping == "likely" {
 		ty += lineH
 		fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="note">likely one device (adjacent MACs)</text>`+"\n", x+6, ty)
 	}
-	if d.Note != "" {
+	if d.Gateway != "" {
 		ty += lineH
-		fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="note">%s</text>`+"\n", x+6, ty, esc(clip(d.Note, 40)))
+		fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="gwnote">%s</text>`+"\n", x+6, ty, esc(clip("gateway · "+d.Gateway, chars(40))))
+	}
+	if note := d.Note; note != "" {
+		if d.Via != "" {
+			// The line from the access point already says which one; the table keeps its name.
+			note = "through the access point (wireless, or wired to it)"
+		}
+		first, rest := wrapLine(note, chars(40))
 		ty += lineH
-		if len(d.Note) > 40 {
-			fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="note">%s</text>`+"\n", x+6, ty, esc(clip(d.Note[40:], 40)))
+		fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="note">%s</text>`+"\n", x+6, ty, esc(first))
+		ty += lineH
+		if rest != "" {
+			fmt.Fprintf(b, `<text x="%.0f" y="%.0f" class="note">%s</text>`+"\n", x+6, ty, esc(clip(rest, chars(40))))
 		}
 	}
 	return h
@@ -468,3 +520,20 @@ func sortPorts(p []string) {
 
 // labelWidth estimates a .small label's width in pixels (about 6 px a character at its size).
 func labelWidth(s string) float64 { return float64(len([]rune(s))) * 6 }
+
+// wrapLine splits s into a first line of at most n characters, broken at a space where there is one,
+// and the rest.
+func wrapLine(s string, n int) (string, string) {
+	r := []rune(s)
+	if len(r) <= n {
+		return s, ""
+	}
+	cut := n
+	for i := n; i > n/2; i-- {
+		if r[i] == ' ' {
+			cut = i
+			break
+		}
+	}
+	return strings.TrimSpace(string(r[:cut])), strings.TrimSpace(string(r[cut:]))
+}

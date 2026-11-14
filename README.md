@@ -1,10 +1,13 @@
 # net-diagram
 
 Finds the managed switches on a network, logs into the ones you choose, reads their LLDP
-neighbors, MAC tables, ports and PoE, and draws how the switches and devices connect. It is
+neighbors, MAC tables, ports and PoE, and draws how the switches and devices connect, with the
+Wi-Fi access points and the gateway picked out. It is
 **read-only on every switch**: it can only send `show` commands from a fixed allowlist (and, for
 TP-Link, help queries under `show`), plus `enable` (Netgear, TP-Link) or `terminal datadump` (Cisco) to
-set up its own session, which change no configuration.
+set up its own session, which change no configuration. To recognise access points it also reads the
+SSH banner and web server header of the devices that share a switch port, which changes nothing on
+them either.
 
 Supported switches:
 
@@ -106,11 +109,23 @@ The password is never printed or written to a file.
   or chassis ID, then the manufacturer and the MAC's last three bytes. A switch listed in
   the database is titled by its database name.
 - **IPs.** From the switch's ARP table, then LLDP management addresses, then the sweep.
+- **Access points.** A Wi-Fi access point's clients are learned on the switch port the access
+  point is wired to, so they look like more devices on that port. A device is taken for an access
+  point when an LLDP neighbor with its MAC says "WLAN Access Point", when your device database
+  gives it the type `ap`, `wap` or `access point`, or, on a live read, when its SSH or web server
+  matches a known one (a UniFi: Ubiquiti with SSH `dropbear`; a TP-Link access point: TP-Link with
+  the web server `TP-LINK HTTPD`). A match from the server is shown as "likely". On a port with
+  one access point, the other devices there are drawn beneath it: its wireless clients, or devices
+  wired to it. With two or more on one port, both are marked and nothing is nested.
+- **Gateway.** The device holding the default gateway of the PC you read from (its route table,
+  read at each live read and kept in the snapshot), or one your device database types `gateway`,
+  `router` or `firewall`.
 
 In the drawing, each switch is a box with its ports (green up, grey down), and each used
 port has a column of devices under it, labelled with the port and its PoE draw. Wires are
 routed so they don't cross where that can be avoided. Dashed boxes are "likely" groups,
-dotted boxes are VMs, and the blue box is your computer. A link between two read switches is
+dotted boxes are VMs, the blue box is your computer, green boxes are access points (with the
+devices through them hanging beneath on green lines), and the purple box is the gateway. A link between two read switches is
 an orange line between the two ports.
 
 ## Build and test
@@ -137,6 +152,8 @@ useful thing to send if a switch's output doesn't parse.
 | `netgear.go`, `cisco.go`, `tplink.go` | each vendor's command list and parser                                                                           |
 | `tables.go`                           | shared readers for CLI tables and `Key.... value` lines                                                         |
 | `correlate.go`                        | links, placement, grouping and naming                                                                           |
+| `accesspoint.go`                      | finding access points (LLDP, database, SSH and web fingerprints) and the devices through them                   |
+| `gateway.go`                          | the PC's default gateways and marking the gateway device                                                        |
 | `svg.go`                              | the drawing                                                                                                     |
 | `telnet.go`                           | the CLI session, over Telnet or SSH (Netgear, TP-Link): login, pager, help queries                              |
 | `ssh.go`                              | the interactive SSH shell for CLIs used like a terminal (TP-Link)                                               |
