@@ -1,0 +1,28 @@
+
+Interface  Power(w)  Current(mA)  Voltage(v)  PD-Class  Power-Status    
+---------- --------  -----------  ----------  --------  ----------------
+Gi1/0/1    0.0       0            0.0         N/A       OFF            
+Gi1/0/2    0.0       0            0.0         N/A       OFF            
+Gi1/0/3    0.0       0            0.0         N/A       OFF            
+Gi1/0/4    0.0       0            0.0         N/A       OFF            
+Gi1/0/5    0.0       0            0.0         N/A       OFF            
+Gi1/0/6    0.0       0            0.0         N/A       OFF            
+Gi1/0/7    0.0       0            0.0         N/A       OFF            
+Gi1/0/8    0.0       0            0.0         N/A       OFF            
+Gi1/0/9    4.3       81           53.3        Class 4   ON             
+Gi1/0/10   0.0       0            0.0         N/A       OFF            
+Gi1/0/11   5.4       102          53.2        Class 3   ON             
+Gi1/0/12   0.0       0            0.0         N/A       OFF            
+Gi1/0/13   8.0       150          53.3        Class 4   ON             
+Gi1/0/14   0.0       0            0.0         N/A       OFF            
+Gi1/0/15   0.0       0            0.0         N/A       OFF            
+Gi1/0/16   0.0       0            0.0         N/A       OFF            
+Gi1/0/17   0.0       0            0.0         N/A       OFF            
+Gi1/0/18   0.0       0            0.0         N/A       OFF            
+Gi1/0/19   0.0       0            0.0         N/A       OFF            
+Gi1/0/20   0.0       0            0.0         N/A       OFF            
+Gi1/0/21   0.0       0            0.0         N/A       OFF            
+Gi1/0/22   0.0       0            0.0         N/A       OFF            
+Gi1/0/23   0.0       0            0.0         N/A       OFF            
+Gi1/0/24   0.0       0            0.0         N/A       OFF            
+

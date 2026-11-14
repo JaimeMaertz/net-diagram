@@ -1,0 +1,30 @@
+ Port      Status      Speed     Duplex    FlowCtrl    Active-Medium   Description
+ ----      ------      -----     ------    --------    -------------   -----------
+ Gi1/0/1   LinkUp      100M      Full      Disable     Copper          
+ Gi1/0/2   LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/3   LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/4   LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/5   LinkUp      1000M     Full      Disable     Copper          
+ Gi1/0/6   LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/7   LinkUp      1000M     Full      Disable     Copper          
+ Gi1/0/8   LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/9   LinkUp      1000M     Full      Disable     Copper          
+ Gi1/0/10  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/11  LinkUp      1000M     Full      Disable     Copper          
+ Gi1/0/12  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/13  LinkUp      1000M     Full      Disable     Copper          
+ Gi1/0/14  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/15  LinkUp      1000M     Full      Disable     Copper          
+ Gi1/0/16  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/17  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/18  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/19  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/20  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/21  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/22  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/23  LinkDown    N/A       N/A       N/A         Copper          
+ Gi1/0/24  LinkDown    N/A       N/A       N/A         Copper          
+ Te1/0/25  LinkDown    N/A       N/A       N/A         Fiber           
+ Te1/0/26  LinkDown    N/A       N/A       N/A         Fiber           
+ Te1/0/27  LinkDown    N/A       N/A       N/A         Fiber           
+ Te1/0/28  LinkDown    N/A       N/A       N/A         Fiber           

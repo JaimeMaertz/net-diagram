@@ -1,0 +1,40 @@
+
+LLDP Neighbor Information:
+
+ten-gigabitEthernet 1/0/25:
+
+Neighbor index 1:
+        Chassis type:                           MAC address
+        Chassis ID:                             40:ED:00:E3:A9:C4
+        Port ID type:                           Interface name
+        Port ID:                                ten-gigabitEthernet 1/0/25
+        Port description:                       ten-gigabitEthernet 1/0/25
+        TTL:                                    120
+        System name:                            TL-SG3428X
+        System description:                     JetStream 24-Port Gigabit L2+ Ma
+                                                naged Switch with 4 10GE SFP+ Sl
+                                                ots
+        System capabilities supported:          Bridge Router 
+        System capabilities enabled:            Bridge Router 
+        Management address type:                ipv4
+        Management address:                     192.168.1.102
+        Management address interface type:      IfIndex
+        Management address interface ID:        1
+        Management address OID:                 0
+        Port VLAN ID(PVID):                     1
+        Port and protocol VLAN ID(PPVID):       0
+        Port and protocol VLAN supported:       Yes
+        Port and protocol VLAN enabled:         No
+        VLAN name of VLAN 1:                    System-VLAN
+        Protocol identity:                      
+        Auto-negotiation supported:             Yes
+        Auto-negotiation enabled:               No
+        OperMau:                                speed(10)/duplex(Half)
+        Link aggregation supported:             Yes
+        Link aggregation enabled:               No
+        Aggregation port ID:                    0
+        Power port class:                       PD
+        PSE power supported:                    No
+        PSE power enabled:                      No
+        PSE pairs control ability:              No
+        Maximum frame size:                     1526

@@ -1,0 +1,11 @@
+ System Description   - JetStream 24-Port Gigabit and 4-Port 10GE SFP+ L2+ Managed Switch with 24-Port PoE+
+ System Name          - TL-SG3428XMP
+ System Location      - Hong Kong
+ Contact Information  - www.tp-link.com
+ Hardware Version     - TL-SG3428XMP 3.0
+ Software Version     - 3.0.3 Build 20230602 Rel.76586
+ Bootloader Version   - TP-LINK  BOOTUTIL(v1.0.0)
+ Mac Address          - 5C-E9-31-1B-88-27
+ Serial Number        - Y230000000103
+ System Time          - 2006-08-27 16:22:37
+ Running Time         - 238 day - 8 hour - 23 min - 22 sec

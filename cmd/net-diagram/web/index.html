@@ -19,6 +19,7 @@
   #subnets { width:420px; } #dir { width:420px; }
   button { padding:7px 14px; border-radius:6px; border:1px solid var(--accent); background:var(--accent); color:#fff; font:inherit; cursor:pointer; }
   button.ghost { background:#fff; color:var(--accent); }
+  button.link { padding:0 4px; border:none; background:none; color:var(--accent); text-decoration:underline; }
   button:disabled { opacity:.5; cursor:default; }
   table { border-collapse:collapse; width:100%; margin-top:10px; }
   th, td { text-align:left; padding:5px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
@@ -101,7 +102,7 @@
     <label for="loginPw">Password</label>
     <input id="loginPw" type="password" autocomplete="off">
     <div class="row">
-      <button value="skip" class="ghost">Skip this switch</button>
+      <button value="skip" class="ghost" id="loginSkip">Skip this switch</button>
       <button value="save" id="loginSave">Save and read</button>
     </div>
   </form>
@@ -162,7 +163,7 @@ function drawHosts() {
     const can = h.candidate && h.supported;
     let why = "";
     if (h.vendor && !h.supported) why = `<span class="warn">${esc(h.vendor)}: not supported yet</span>`;
-    else if (h.vendor && !h.candidate) why = `<span class="warn">no SSH or Telnet open</span>`;
+    else if (h.vendor && !h.candidate) why = `<span class="warn">${esc(h.note || "no SSH or Telnet open")}</span>`;
     return `<tr class="${h.vendor ? "" : "dim"}">
       <td><input type="checkbox" data-i="${i}" ${can ? "checked" : ""} ${can ? "" : "disabled"}></td>
       <td class="mono">${esc(h.ip)}</td>
@@ -170,13 +171,29 @@ function drawHosts() {
       <td>${esc(h.model || h.manufacturer || "")}</td>
       <td class="mono">${esc(h.mac || "")}</td>
       <td>${access(h)}</td>
-      <td>${h.vendor ? (h.has_login ? '<span class="ok">saved</span>' : "none") : ""}</td>
+      <td>${h.vendor && h.supported && h.mac ? `${h.has_login ? '<span class="ok">saved</span>' : "none"} <button class="link" data-login="${i}">Set…</button>` : ""}</td>
       <td id="res-${i}">${why}</td></tr>`;
-  }).join("") || `<tr><td colspan="8" class="status">No switch makers (Netgear, Cisco, Aruba) answered. Tick "Show every host" to see what did.</td></tr>`;
+  }).join("") || `<tr><td colspan="8" class="status">No switch makers (Netgear, Cisco, TP-Link, Aruba) answered. Tick "Show every host" to see what did.</td></tr>`;
 }
+// Set… saves a login for one switch without reading it (a first login, or a corrected one).
+$("hostRows").addEventListener("click", async ev => {
+  const b = ev.target.closest("button[data-login]");
+  if (!b) return;
+  const h = hosts[+b.dataset.login];
+  const cell = $("res-" + hosts.indexOf(h));
+  const l = await askLogin(h, true);
+  if (!l) return;
+  try {
+    await api("/api/login", { mac: h.mac, user: l.user, password: l.password });
+    h.has_login = true; drawHosts();
+    $("res-" + hosts.indexOf(h)).innerHTML = '<span class="ok">login saved</span>';
+  } catch (e) { cell.innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+});
 const ipNum = ip => ip.split(".").reduce((a, o) => a * 256 + +o, 0);
 
-function askLogin(h) {
+function askLogin(h, saveOnly) {
+  $("loginSave").textContent = saveOnly ? "Save" : "Save and read";
+  $("loginSkip").textContent = saveOnly ? "Cancel" : "Skip this switch";
   return new Promise(resolve => {
     $("loginWho").textContent = `${h.name || h.model || h.vendor} (${h.ip})`;
     $("loginTarget").textContent = "net-diagram:" + h.mac;

@@ -1,0 +1,11 @@
+ System Description   - JetStream 24-Port Gigabit L2+ Managed Switch with 4 10GE SFP+ Slots
+ System Name          - TL-SG3428X
+ System Location      - Hong Kong
+ Contact Information  - www.tp-link.com
+ Hardware Version     - TL-SG3428X 1.0
+ Software Version     - 1.0.7 Build 20220606 Rel.58990
+ Bootloader Version   - TP-LINK  BOOTUTIL(v1.0.0)
+ Mac Address          - 40-ED-00-E3-A9-C4
+ Serial Number        - Y230000000102
+ System Time          - 2006-08-27 16:22:51
+ Running Time         - 238 day - 8 hour - 23 min - 33 sec

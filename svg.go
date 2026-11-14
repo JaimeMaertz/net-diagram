@@ -221,8 +221,15 @@ func SVG(s Snapshot) string {
 		lx := laneX(t.lane)
 		fmt.Fprintf(&body, `<polyline points="%.0f,%.0f %.0f,%.0f %.0f,%.0f %.0f,%.0f %.0f,%.0f %.0f,%.0f" class="trunk"/>`+"\n",
 			t.startX, t.startY, t.startX, t.runY, lx, t.runY, lx, entry, bpos.x, entry, bpos.x, top)
-		fmt.Fprintf(&body, `<text x="%.0f" y="%.0f" class="small" text-anchor="end">%s ↔ %s</text>`+"\n",
-			bpos.x-6, entry-4, esc(t.upPort), esc(t.downPort))
+		// The label sits left of the lower port; when the port is near the left edge it would run off
+		// the sheet (or over the gutter), so it goes right of the port instead.
+		label := t.upPort + " ↔ " + t.downPort
+		lblX, anchor := bpos.x-6, "end"
+		if lblX-labelWidth(label) < lx+4 {
+			lblX, anchor = bpos.x+6, "start"
+		}
+		fmt.Fprintf(&body, `<text x="%.0f" y="%.0f" class="small" text-anchor="%s">%s</text>`+"\n",
+			lblX, entry-4, anchor, esc(label))
 	}
 
 	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" width="%.0f" height="%.0f" viewBox="0 0 %.0f %.0f" font-family="Segoe UI, Arial, sans-serif">`+"\n", width, y, width, y)
@@ -458,3 +465,6 @@ func sortPorts(p []string) {
 		}
 	}
 }
+
+// labelWidth estimates a .small label's width in pixels (about 6 px a character at its size).
+func labelWidth(s string) float64 { return float64(len([]rune(s))) * 6 }

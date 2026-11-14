@@ -46,7 +46,7 @@ func Build(switches []Switch, db DeviceDB, oui OUI, extraARP []ARP, self map[str
 		for _, m := range sw.MACs {
 			owner[m] = sw.Host
 		}
-		if sw.Name != "" {
+		if sw.Name != "" && uniqueName(switches, sw.Name) {
 			byName[strings.ToLower(sw.Name)] = sw.Host
 		}
 		byHost[sw.Host] = true
@@ -103,12 +103,23 @@ func Build(switches []Switch, db DeviceDB, oui OUI, extraARP []ARP, self map[str
 					addLink(Link{FromSwitch: sw.Host, FromPort: p.Name, ToName: name})
 				}
 			}
-			// No LLDP, but another read switch's own MAC is learned here: a link all the same.
+			// No LLDP, but other read switches' own MACs are learned here: the port is an uplink, and
+			// it links to the nearest of them (directMACNeighbors).
+			if uplink[portKey{sw.Host, p.Name}] {
+				continue
+			}
+			var seen []string
 			for _, e := range p.MACs {
-				if other := owner[e.MAC]; other != "" && other != sw.Host && !uplink[portKey{sw.Host, p.Name}] {
-					uplink[portKey{sw.Host, p.Name}] = true
-					addLink(Link{FromSwitch: sw.Host, FromPort: p.Name, ToSwitch: other, ToPort: farPort(switches, other, sw)})
+				if other := owner[e.MAC]; other != "" && other != sw.Host && !contains(seen, other) {
+					seen = append(seen, other)
 				}
+			}
+			if len(seen) == 0 {
+				continue
+			}
+			uplink[portKey{sw.Host, p.Name}] = true
+			for _, other := range directMACNeighbors(sw.Host, seen, switches) {
+				addLink(Link{FromSwitch: sw.Host, FromPort: p.Name, ToSwitch: other, ToPort: farPort(switches, other, sw)})
 			}
 		}
 	}
@@ -413,19 +424,28 @@ func farPort(switches []Switch, host string, sw Switch) string {
 	for _, m := range sw.MACs {
 		mine[m] = true
 	}
+	byName := sw.Name != "" && uniqueName(switches, sw.Name)
 	for _, o := range switches {
 		if o.Host != host {
 			continue
 		}
+		// The neighbor that is sw by its MAC or address, then by a name no other read switch has,
+		// then the port where sw's own MAC is learned.
 		for _, p := range o.Ports {
 			for _, n := range p.Neighbors {
-				if m, ok := NormalizeMAC(n.ChassisID); ok && mine[m] {
-					return p.Name
-				}
-				if n.MgmtIP == sw.Host || (sw.Name != "" && strings.EqualFold(n.SystemName, sw.Name)) {
+				if m, ok := NormalizeMAC(n.ChassisID); ok && mine[m] || n.MgmtIP == sw.Host {
 					return p.Name
 				}
 			}
+		}
+		for _, p := range o.Ports {
+			for _, n := range p.Neighbors {
+				if byName && strings.EqualFold(n.SystemName, sw.Name) {
+					return p.Name
+				}
+			}
+		}
+		for _, p := range o.Ports {
 			for _, e := range p.MACs {
 				if mine[e.MAC] {
 					return p.Name
@@ -434,6 +454,18 @@ func farPort(switches []Switch, host string, sw Switch) string {
 		}
 	}
 	return ""
+}
+
+// uniqueName reports whether no other read switch has this system name. Switches often keep their
+// model as their name (two TL-SG3428X both answer "TL-SG3428X"), and a shared name can't tell them apart.
+func uniqueName(switches []Switch, name string) bool {
+	n := 0
+	for _, s := range switches {
+		if strings.EqualFold(s.Name, name) {
+			n++
+		}
+	}
+	return n == 1
 }
 
 // portLess orders "0/2" before "0/10".
@@ -464,4 +496,46 @@ func portNumbers(s string) []int {
 		n = append(n, cur)
 	}
 	return n
+}
+
+// directMACNeighbors picks, from the read switches whose MACs are learned on one of from's ports, the
+// ones wired straight to it. A switch's MAC is learned on every port that leads toward it, so a port also
+// sees the switches beyond its neighbor. B is not direct when some other seen switch C learns from and B
+// on different ports of its own: C then sits between them. A switch hanging off beyond B learns from and B
+// on the same port, so it doesn't count against B. Several survive only when the port leads to a shared
+// segment (an unmanaged switch with read switches on it).
+func directMACNeighbors(from string, seen []string, switches []Switch) []string {
+	byHost := map[string]Switch{}
+	for _, s := range switches {
+		byHost[s.Host] = s
+	}
+	// portToward is the port on switch c where any of switch h's own MACs is learned.
+	portToward := func(c, h string) string {
+		for _, p := range byHost[c].Ports {
+			for _, e := range p.MACs {
+				if contains(byHost[h].MACs, e.MAC) {
+					return p.Name
+				}
+			}
+		}
+		return ""
+	}
+	var direct []string
+	for _, b := range seen {
+		between := false
+		for _, c := range seen {
+			if c == b {
+				continue
+			}
+			ta, tb := portToward(c, from), portToward(c, b)
+			if ta != "" && tb != "" && ta != tb {
+				between = true
+				break
+			}
+		}
+		if !between {
+			direct = append(direct, b)
+		}
+	}
+	return direct
 }

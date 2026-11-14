@@ -53,7 +53,7 @@ func main() {
 func usage() {
 	fmt.Fprintln(os.Stderr, `usage:
   net-diagram                       (the web interface; also: net-diagram gui [-no-browser])
-  net-diagram discover [-vendor Netgear|Cisco] -host IP (-cred TARGET | -from DIR) [-host … ] -out snapshot.json [-raw DIR] [-db devices.json] [-oui oui.txt]
+  net-diagram discover [-vendor Netgear|Cisco|TP-Link] -host IP (-cred TARGET | -from DIR) [-host … ] -out snapshot.json [-raw DIR] [-db devices.json] [-oui oui.txt]
   net-diagram draw snapshot.json -o diagram.svg`)
 	os.Exit(2)
 }
@@ -66,7 +66,7 @@ func discover(args []string) {
 	fs.Var(&froms, "from", "folder of saved command output instead of logging in")
 	out := fs.String("out", "", "snapshot file to write")
 	raw := fs.String("raw", "", "also save each switch's raw output under this folder")
-	vendor := fs.String("vendor", "Netgear", "Netgear or Cisco, for logging in (with -from it's read from the output)")
+	vendor := fs.String("vendor", "Netgear", "Netgear, Cisco or TP-Link, for logging in (with -from it's read from the output)")
 	dbPath := fs.String("db", findPingerFile("devices.json"), "device database")
 	ouiPath := fs.String("oui", findPingerFile("oui.txt"), "manufacturer list")
 	fs.Parse(args)

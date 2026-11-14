@@ -1,0 +1,6 @@
+Interface          Address                 Hardware Addr           Type     
+VLAN1              192.168.1.22            70:85:c2:cc:c0:32       DYNAMIC  
+VLAN1              192.168.1.193           e0:c9:32:23:0d:d1       DYNAMIC  
+
+Total Arp Entry Number: 2
+

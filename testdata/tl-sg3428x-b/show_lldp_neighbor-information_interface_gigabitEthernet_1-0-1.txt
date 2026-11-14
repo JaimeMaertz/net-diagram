@@ -1,0 +1,40 @@
+
+LLDP Neighbor Information:
+
+gigabitEthernet 1/0/1:
+
+Neighbor index 1:
+        Chassis type:                           MAC address
+        Chassis ID:                             5C:E9:31:1B:88:27
+        Port ID type:                           Interface name
+        Port ID:                                gigabitEthernet 1/0/5
+        Port description:                       gigabitEthernet 1/0/5
+        TTL:                                    120
+        System name:                            TL-SG3428XMP
+        System description:                     JetStream 24-Port Gigabit and 4-
+                                                Port 10GE SFP+ L2+ Managed Switc
+                                                h with 24-Port PoE+
+        System capabilities supported:          Bridge Router 
+        System capabilities enabled:            Bridge Router 
+        Management address type:                ipv4
+        Management address:                     192.168.1.100
+        Management address interface type:      IfIndex
+        Management address interface ID:        1
+        Management address OID:                 0
+        Port VLAN ID(PVID):                     1
+        Port and protocol VLAN ID(PPVID):       0
+        Port and protocol VLAN supported:       Yes
+        Port and protocol VLAN enabled:         No
+        VLAN name of VLAN 1:                    System-VLAN
+        Protocol identity:                      
+        Auto-negotiation supported:             Yes
+        Auto-negotiation enabled:               Yes
+        OperMau:                                speed(1000)/duplex(Full)
+        Link aggregation supported:             Yes
+        Link aggregation enabled:               No
+        Aggregation port ID:                    0
+        Power port class:                       PSE
+        PSE power supported:                    Yes
+        PSE power enabled:                      No
+        PSE pairs control ability:              No
+        Maximum frame size:                     1518

@@ -1,9 +1,13 @@
 package netdiagram
 
 import (
+	"bufio"
+	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"net"
+	"net/http"
 	"os/exec"
 	"regexp"
 	"strings"
@@ -23,11 +27,13 @@ type Host struct {
 	Jobsite      string  `json:"jobsite,omitempty"`
 
 	// Filled in by FindSwitches.
-	Vendor    string       `json:"vendor,omitempty"`    // Netgear, Cisco, Aruba: a switch maker
-	Supported bool         `json:"supported,omitempty"` // net-diagram can read this vendor today
-	Candidate bool         `json:"candidate,omitempty"` // a switch maker with telnet or SSH open
-	Ports     map[int]bool `json:"ports,omitempty"`     // 22, 23, 80, 443: open or not
-	HasLogin  bool         `json:"has_login,omitempty"` // a login is saved for it
+	Vendor    string       `json:"vendor,omitempty"`     // Netgear, Cisco, TP-Link, Aruba: a switch maker
+	Supported bool         `json:"supported,omitempty"`  // net-diagram can read this vendor today
+	Candidate bool         `json:"candidate,omitempty"`  // a switch maker with telnet or SSH open
+	Ports     map[int]bool `json:"ports,omitempty"`      // 22, 23: TCP open; 80, 443: an HTTP status came back
+	HasLogin  bool         `json:"has_login,omitempty"`  // a login is saved for it
+	SSHBanner string       `json:"ssh_banner,omitempty"` // the SSH server's first line, read for TP-Link
+	Note      string       `json:"note,omitempty"`       // why a switch maker's host isn't a candidate
 }
 
 // Sweep is pinger's -json output.
@@ -66,6 +72,7 @@ var switchMakers = []struct {
 }{
 	{regexp.MustCompile(`(?i)netgear`), "Netgear", true},
 	{regexp.MustCompile(`(?i)cisco`), "Cisco", true},
+	{regexp.MustCompile(`(?i)tp-?link`), "TP-Link", true},
 	{regexp.MustCompile(`(?i)aruba|hewlett|\bhpe\b`), "Aruba", false},
 }
 
@@ -92,17 +99,97 @@ func FindSwitches(hosts []Host, db DeviceDB, hasLogin func(mac string) bool) {
 		if h.Vendor == "" {
 			continue
 		}
+		e, inDB := db[h.MAC]
+		isSwitch := inDB && strings.EqualFold(e.Type, "switch")
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			h.Ports = ProbePorts(h.IP, []int{22, 23, 80, 443}, 800*time.Millisecond)
+			h.Ports = ProbeHost(h.IP)
 			h.Candidate = h.Ports[22] || h.Ports[23]
+			if h.Vendor == "TP-Link" && !isSwitch {
+				// TP-Link makes access points, routers and plugs too. Its JetStream switches run
+				// "IPSSH"; its access points and routers run dropbear. Telnet is a switch's.
+				if h.Ports[22] {
+					h.SSHBanner = SSHBanner(h.IP, 3*time.Second)
+				}
+				h.Candidate = h.Ports[23] || strings.Contains(h.SSHBanner, "IPSSH")
+				if !h.Candidate && h.SSHBanner != "" {
+					h.Note = "not a switch (SSH server " + h.SSHBanner + ")"
+				}
+			}
 		}()
 		if h.MAC != "" && hasLogin != nil {
 			h.HasLogin = hasLogin(h.MAC)
 		}
 	}
 	wg.Wait()
+}
+
+// WebTimeout is how long a web check waits for a status line.
+const WebTimeout = 3 * time.Second
+
+// ProbeHost fills a switch's port badges: SSH and Telnet by a TCP connection (800 ms), Web and HTTPS
+// by WebAnswers, all at once. A TCP connection alone doesn't prove a web server: on a phone hotspot (and any
+// network with a transparent proxy) ports 80 and 443 accept the connection for every address, even an
+// unused one, and then never answer.
+func ProbeHost(ip string) map[int]bool {
+	open := ProbePorts(ip, []int{22, 23}, 800*time.Millisecond)
+	var web, secure bool
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go func() { defer wg.Done(); web = WebAnswers("http://"+ip+"/", WebTimeout) }()
+	go func() { defer wg.Done(); secure = WebAnswers("https://"+ip+"/", WebTimeout) }()
+	wg.Wait()
+	open[80], open[443] = web, secure
+	return open
+}
+
+// webClient sends the web checks: no redirects followed, no proxy, any certificate accepted (AV and
+// network devices carry self-signed ones), no kept connections.
+var webClient = &http.Client{
+	CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse },
+	Transport: &http.Transport{
+		Proxy:             nil,
+		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+		DisableKeepAlives: true,
+	},
+}
+
+// WebAnswers reports whether a GET to url comes back with any HTTP status (200, a redirect, 401, 404 all
+// count) within the timeout.
+func WebAnswers(url string, timeout time.Duration) bool {
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return false
+	}
+	resp, err := webClient.Do(req)
+	if err != nil {
+		return false
+	}
+	resp.Body.Close()
+	return true
+}
+
+// SSHBanner returns the first line an SSH server sends ("SSH-1.99-IPSSH-6.6.0"), without the
+// "SSH-x.y-" prefix, or "" when none arrives in time.
+func SSHBanner(ip string, timeout time.Duration) string {
+	c, err := net.DialTimeout("tcp", net.JoinHostPort(ip, "22"), timeout)
+	if err != nil {
+		return ""
+	}
+	defer c.Close()
+	c.SetReadDeadline(time.Now().Add(timeout))
+	line, _ := bufio.NewReader(c).ReadString('\n')
+	line = strings.TrimSpace(line)
+	if !strings.HasPrefix(line, "SSH-") {
+		return ""
+	}
+	if i := strings.Index(line[4:], "-"); i >= 0 {
+		return line[4+i+1:]
+	}
+	return line
 }
 
 // ProbePorts tries a TCP connection to each port at once.

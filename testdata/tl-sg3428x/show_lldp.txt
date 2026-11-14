@@ -1,0 +1,12 @@
+ LLDP Status:                  Enabled
+
+ LLDP Forward Message:         Disabled
+
+ Tx Interval:                  30 seconds
+ TTL Multiplier:               4
+ Tx Delay:                     2 seconds
+ Initialization Delay:         2 seconds
+ Trap Notification Interval:   5 seconds
+ Fast-packet Count:            3
+
+ LLDP-MED Fast Start Repeat Count:  4

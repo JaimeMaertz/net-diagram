@@ -1,0 +1,40 @@
+
+                    MAC Address Table                    
+------------------------------------------------------------  
+MAC                VLAN    Port     Type            Aging    
+---                ----    ----     ----            -----    
+00:90:5e:af:bd:21  1       Te1/0/25 dynamic         aging    
+00:c0:b7:62:51:6b  1       Gi1/0/1  dynamic         aging    
+0c:8b:7d:d0:54:36  1       Gi1/0/1  dynamic         aging    
+14:92:f9:19:92:53  1       Gi1/0/1  dynamic         aging    
+24:2f:d0:f0:0e:f1  1       Gi1/0/1  dynamic         aging    
+24:2f:d0:f0:11:41  1       Gi1/0/1  dynamic         aging    
+24:2f:d0:f0:16:f0  1       Gi1/0/1  dynamic         aging    
+30:68:93:d4:5c:52  1       Gi1/0/1  dynamic         aging    
+34:20:03:37:e2:85  1       Gi1/0/1  dynamic         aging    
+34:7e:5c:88:2f:85  1       Te1/0/25 dynamic         aging    
+34:7e:5c:8f:71:33  1       Te1/0/25 dynamic         aging    
+40:ed:00:e3:a9:c4  1       Te1/0/25 dynamic         aging    
+5c:e9:31:1b:88:27  1       Gi1/0/1  dynamic         aging    
+5c:fc:e1:1a:0d:e5  1       Gi1/0/1  dynamic         aging    
+64:52:99:3b:c9:4d  1       Gi1/0/1  dynamic         aging    
+64:62:66:10:ad:6e  1       Gi1/0/1  dynamic         aging    
+66:4e:bb:a5:2e:9a  1       Gi1/0/1  dynamic         aging    
+6c:99:9d:9f:cd:2e  1       Gi1/0/1  dynamic         aging    
+70:85:c2:cc:c0:32  1       Gi1/0/23 dynamic         aging    
+78:28:ca:1a:96:72  1       Te1/0/25 dynamic         aging    
+94:9f:3e:69:e9:ce  1       Te1/0/25 dynamic         aging    
+98:ba:5f:b5:6b:2c  1       Gi1/0/1  dynamic         aging    
+98:ba:5f:b5:6b:33  1       Gi1/0/1  dynamic         aging    
+98:ba:5f:b5:6b:59  1       Gi1/0/1  dynamic         aging    
+98:ba:5f:b5:6b:87  1       Gi1/0/1  dynamic         aging    
+b0:be:76:6f:6a:4c  1       Gi1/0/1  dynamic         aging    
+b4:fb:e4:7f:88:74  1       Gi1/0/1  dynamic         aging    
+bc:24:11:7f:29:57  1       Gi1/0/1  dynamic         aging    
+bc:24:11:d0:27:f6  1       Gi1/0/1  dynamic         aging    
+d4:6a:91:9d:db:2b  1       Te1/0/25 dynamic         aging    
+e0:bb:9e:f9:44:cc  1       Gi1/0/1  dynamic         aging    
+e0:c9:32:23:0d:d1  1       Gi1/0/1  dynamic         aging    
+
+Total MAC Addresses for this criterion: 32
+

@@ -31,18 +31,32 @@ var allowed = map[string]bool{
 	"show mac address-table":      true, // p. 157
 	"show power inline":           true, // p. 1030
 	"show arp":                    true, // p. 605
+
+	// TP-Link JetStream (TL-SG3428X / XMP): each read from the switch's own help ("show ?" and below)
+	// on a TL-SG3428XMP 3.0, firmware 3.0.3; "show arp" and "show mac address-table" are shared with Cisco above
+	"show lldp":                               true, // the global LLDP status
+	"show system-info":                        true,
+	"show interface status":                   true,
+	"show lldp neighbor-information":          true,
+	"show power inline information interface": true,
 }
 
 // portArg matches the per-port show commands: "show lldp remote-device detail 0/5" (p. 829) and
 // "show port description 0/5" (p. 490), with a slot/port or unit/slot/port argument only.
 var portArg = regexp.MustCompile(`^show (lldp remote-device detail|port description) \d+(/\d+){1,2}$` +
 	// Cisco: "show lldp neighbors gi1/0/5" (also te, fa, and the long forms)
-	`|^show lldp neighbors (?i:gi|te|fa|gigabitethernet|tengigabitethernet|fastethernet)\d+(/\d+){1,2}$`)
+	`|^show lldp neighbors (?i:gi|te|fa|gigabitethernet|tengigabitethernet|fastethernet)\d+(/\d+){1,2}$` +
+	// TP-Link: "show lldp neighbor-information interface gigabitEthernet 1/0/5" (the switch's help)
+	`|^show lldp neighbor-information interface (fastEthernet|gigabitEthernet|two-gigabitEthernet|ten-gigabitEthernet) \d+/\d+/\d+$`)
+
+// helpQuery matches a CLI help request under "show" ("show ?", "show lldp ?"): it lists the syntax
+// the switch offers, and the line it leaves behind can only run a show.
+var helpQuery = regexp.MustCompile(`^show( [a-z0-9][a-z0-9-]*)* \?$`)
 
 // Allowed reports whether cmd may be sent.
 func Allowed(cmd string) bool {
 	c := strings.Join(strings.Fields(cmd), " ")
-	if allowed[c] {
+	if allowed[c] || helpQuery.MatchString(c) {
 		return true
 	}
 	return portArg.MatchString(c)

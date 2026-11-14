@@ -5,6 +5,7 @@
 // and testing parsers.
 //
 //	probe -vendor Netgear -host 172.22.0.4 -cred net-diagram:28:94:01:AF:35:BD -out testdata\m4250
+//	probe -vendor TP-Link -host 192.168.1.100 -cred net-diagram:<MAC> -out testdata\tl-sg3428xmp
 //	probe -vendor Cisco -host 172.22.0.100 -cred net-diagram:<MAC> -out testdata\c1300
 package main
 
@@ -19,7 +20,7 @@ import (
 )
 
 func main() {
-	vendor := flag.String("vendor", "Netgear", "Netgear or Cisco")
+	vendor := flag.String("vendor", "Netgear", "Netgear, Cisco or TP-Link")
 	host := flag.String("host", "", "switch address")
 	cred := flag.String("cred", "", "Credential Manager target holding the login")
 	out := flag.String("out", "", "folder for the raw output")

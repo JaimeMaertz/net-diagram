@@ -1,6 +1,7 @@
 package netdiagram
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -35,8 +36,42 @@ func Collect(vendor, host, user, password string) (map[string]string, error) {
 			}
 			return s.Run(cmd)
 		})
+	case "TP-Link":
+		s, err := dialTPLink(host, user, password)
+		if err != nil {
+			return nil, err
+		}
+		defer s.Close()
+		return CollectTPLink(s.Run)
 	}
 	return nil, fmt.Errorf("%s switches can't be read yet", vendor)
+}
+
+// dialTPLink logs into a TP-Link JetStream switch over SSH, else telnet. Telnet is tried only when
+// SSH can't be used at all (closed, or a handshake this client can't complete), never after a refused
+// password, so a wrong login costs one attempt. Some switches offer SSH with only a 512-bit DSA host
+// key, which no current SSH client accepts (seen on a TL-SG3428X 1.0 with firmware 1.0.7, while another
+// on the same firmware offered none); such a switch is read over telnet.
+func dialTPLink(host, user, password string) (*CLISession, error) {
+	s, sshErr := DialSSHCLI(host, user, password, "")
+	if sshErr == nil {
+		return s, nil
+	}
+	if errors.Is(sshErr, ErrAuth) {
+		return nil, sshErr
+	}
+	s, telErr := DialTelnet(host, user, password, "")
+	if telErr == nil {
+		return s, nil
+	}
+	if errors.Is(telErr, ErrAuth) {
+		return nil, telErr
+	}
+	why := sshErr.Error()
+	if strings.Contains(why, "DSA key size") {
+		why = "the switch's SSH offers only a 512-bit DSA host key, which can't be used (turn telnet on to read it)"
+	}
+	return nil, fmt.Errorf("SSH: %s; telnet: %v", why, telErr)
 }
 
 // Parse builds a Switch from a vendor's command outputs.
@@ -46,6 +81,8 @@ func Parse(vendor, host string, out map[string]string) (Switch, error) {
 		return ParseNetgear(host, out), nil
 	case "Cisco":
 		return ParseCisco(host, out)
+	case "TP-Link":
+		return ParseTPLink(host, out)
 	}
 	return Switch{}, fmt.Errorf("no parser for %s", vendor)
 }
@@ -58,6 +95,9 @@ func VendorOf(out map[string]string) string {
 	}
 	if _, ok := out["show system"]; ok {
 		return "Cisco"
+	}
+	if _, ok := out["show system-info"]; ok {
+		return "TP-Link"
 	}
 	return ""
 }
