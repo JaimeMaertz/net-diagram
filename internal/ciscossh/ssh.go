@@ -26,7 +26,9 @@ var ErrAuth = errors.New("ciscossh: login refused (wrong username or password)")
 
 var (
 	// A prompt at the very end of the output: "C1300#", "C1300(config)#", "C1300(config-if)#", "C1300>".
-	promptRe = regexp.MustCompile(`(?:^|\n)[A-Za-z0-9._\-]+(?:\([^)\n]*\))?[#>] ?$`)
+	// After a Y/N question is answered, the switch can print the prompt twice on one line
+	// ("SW(config)#SW(config)#").
+	promptRe = regexp.MustCompile(`(?:^|\n)(?:[A-Za-z0-9._\-]+(?:\([^)\n]*\))?[#>] ?)+$`)
 	// A question the switch waits on: "Overwrite file [startup-config].... (Y/N)[N] ?"
 	confirmRe = regexp.MustCompile(`\(Y/N\)\s*\[[YN]\]\s*\??\s*$`)
 	// The pager, if paging is still on.

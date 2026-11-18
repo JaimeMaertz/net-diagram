@@ -94,7 +94,7 @@ func Build(switches []Switch, db DeviceDB, oui OUI, extraARP []ARP, self map[str
 				if other := neighborSwitch(n); other != "" && other != sw.Host {
 					uplink[portKey{sw.Host, p.Name}] = true
 					addLink(Link{FromSwitch: sw.Host, FromPort: p.Name, ToSwitch: other, ToPort: farPort(switches, other, sw)})
-				} else if other == "" && isBridge(n) {
+				} else if other == "" && isBridge(n) && !isEndpointBridge(n, p) {
 					uplink[portKey{sw.Host, p.Name}] = true
 					name := n.SystemName
 					if name == "" {
@@ -398,6 +398,42 @@ func isVirtual(mac string) bool { return virtualOUI[strings.ReplaceAll(mac, ":",
 func isBridge(n Neighbor) bool {
 	c := strings.ToLower(n.CapsEnabled)
 	return strings.Contains(c, "bridge") || strings.Contains(c, "router")
+}
+
+// Endpoints that advertise LLDP's Bridge capability for an internal switch, measured on a C1300:
+// Crestron DM NVX (chassis MAC in a Crestron block, system description "The Ångström Distribution …
+// Linux"; one with a Dante card has the card's Audinate MAC behind it) and a 4-series processor
+// (chassis 00:EB:F6:…, not in a Crestron block, described "Crestron DigitalMedia 1.0 (nvx) …").
+var (
+	endpointBridgeOUIs  = []string{"00:10:7F", "94:88:35", "C4:42:68"} // Crestron
+	endpointBridgeDescs = []string{"crestron digitalmedia"}
+)
+
+// isEndpointBridge reports whether a bridge neighbor is an endpoint rather than a switch that wasn't
+// read: it is a known endpoint by MAC block or system description, or nothing but its own MAC is
+// learned on the port.
+func isEndpointBridge(n Neighbor, p Port) bool {
+	own, ok := NormalizeMAC(n.ChassisID)
+	for _, b := range endpointBridgeOUIs {
+		if ok && strings.HasPrefix(own, b) {
+			return true
+		}
+	}
+	desc := strings.ToLower(n.SystemDesc)
+	for _, sig := range endpointBridgeDescs {
+		if strings.Contains(desc, sig) {
+			return true
+		}
+	}
+	if !ok || len(p.MACs) == 0 {
+		return false
+	}
+	for _, e := range p.MACs {
+		if e.MAC != own {
+			return false
+		}
+	}
+	return true
 }
 
 // macGap is the distance between the last three bytes of two MACs.

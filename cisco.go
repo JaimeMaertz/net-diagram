@@ -2,6 +2,7 @@ package netdiagram
 
 import (
 	"errors"
+	"net"
 	"regexp"
 	"strconv"
 	"strings"
@@ -30,7 +31,7 @@ func CiscoPortCommands(out map[string]string) []string {
 	seen := map[string]bool{}
 	for _, line := range strings.Split(out["show lldp neighbors"], "\n") {
 		f := strings.Fields(line)
-		if len(f) > 1 && anyPortWord.MatchString(f[0]) && !seen[f[0]] {
+		if len(f) > 1 && ciscoPortWord.MatchString(f[0]) && !seen[f[0]] {
 			seen[f[0]] = true
 			cmds = append(cmds, "show lldp neighbors "+f[0])
 		}
@@ -68,8 +69,8 @@ func CollectCisco(run func(string) (string, error)) (map[string]string, error) {
 	return out, nil
 }
 
-// ParseCisco builds a Switch from a Catalyst 1300's command outputs. The formats are the CLI
-// guide's examples (testdata/c1300-guide), not yet confirmed against a real switch.
+// ParseCisco builds a Switch from a Catalyst 1300's command outputs: the CLI guide's examples
+// (testdata/c1300-guide) and a real C1300 running standalone (testdata/c1300).
 func ParseCisco(host string, out map[string]string) (Switch, error) {
 	sw := Switch{Host: host, Vendor: "Cisco"}
 	if strings.HasPrefix(out["show system"], "% netdiagram:") || out["show interfaces status"] == "" {
@@ -100,7 +101,7 @@ func ParseCisco(host string, out map[string]string) (Switch, error) {
 	var order []string
 	for _, row := range tableUnder(out["show interfaces status"], "Port") {
 		// Port, Type, Duplex, Speed, Neg, Flow ctrl, Link State, Back Pressure, Mdix Mode
-		if len(row) < 7 || !anyPortWord.MatchString(row[0]) {
+		if len(row) < 7 || !ciscoPortWord.MatchString(row[0]) {
 			continue
 		}
 		p := &Port{Name: row[0], Up: strings.EqualFold(row[6], "Up")}
@@ -175,12 +176,18 @@ func ParseCisco(host string, out map[string]string) (Switch, error) {
 	}
 
 	for _, row := range tableUnder(out["show arp"], "VLAN") {
-		// VLAN, Interface, IP Address, HW Address, Status
-		if len(row) < 4 {
-			continue
+		// VLAN, Interface, IP Address, HW Address, Status. The fields are found by what they hold: a
+		// real C1300 draws one dashed run under "VLAN" and "Interface", so those come as one column.
+		var ip, mac string
+		for _, f := range row {
+			if m, ok := NormalizeMAC(f); ok {
+				mac = m
+			} else if net.ParseIP(strings.TrimSpace(f)) != nil {
+				ip = strings.TrimSpace(f)
+			}
 		}
-		if mac, ok := NormalizeMAC(row[3]); ok && row[2] != "" {
-			sw.ARP = append(sw.ARP, ARP{MAC: mac, IP: row[2]})
+		if mac != "" && ip != "" {
+			sw.ARP = append(sw.ARP, ARP{MAC: mac, IP: ip})
 		}
 	}
 
@@ -192,7 +199,12 @@ func ParseCisco(host string, out map[string]string) (Switch, error) {
 }
 
 var (
-	ciscoInventory = regexp.MustCompile(`PID:\s*([^,]*?)\s*,\s*VID:[^,]*,\s*SN:\s*(\S+)`)
+	// A port as the switch names it: "gi1/0/5" on a stackable unit, "gi5" when the unit runs standalone
+	// ("unit-type unit 1 network gi uplink none" in its configuration; measured on a C1300 52-port).
+	// Port channels ("Po1") are in a table of their own and aren't ports here.
+	ciscoPortWord = regexp.MustCompile(`^\S+\d+/\d+(/\d+)?$|^(?i:gi|te|fa|xg|mg)\d+$`)
+	// "PID: C1300-48P-4X, VID: V01, SN: …" in the CLI guide; a real C1300 separates them with spaces only.
+	ciscoInventory = regexp.MustCompile(`PID:\s*([^,\s]*)[\s,]+VID:\s*[^,\s]*[\s,]+SN:\s*(\S+)`)
 	ciscoVersion   = regexp.MustCompile(`(?m)^\s*Version:\s*(\S+)`)
 )
 

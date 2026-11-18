@@ -1,0 +1,26 @@
+
+Device ID: 00:eb:f6:11:7a:65
+Port ID: 00:eb:f6:11:7a:65
+Capabilities: Bridge
+System Name: ROOM-PRO-64E3.ROOM-PRO-64E3.crestron
+System description: Crestron DigitalMedia 1.0 (nvx) Linux 5.10.72-aarch64+ #1 SMP PREEMPT Thu Jun 18 07:22:15 EDT 2026 aarch64
+Port description: sw0p5
+Management Address: 172.22.0.1
+Time To Live: 46
+
+
+802.3 MAC/PHY Configuration/Status
+Auto-negotiation support: Supported
+Auto-negotiation status: Enabled
+Auto-negotiation Advertised Capabilities: 1000BASE-T full duplex, 100BASE-T2 full duplex mode, 100BASE-TX full duplex mode, 100BASE-TX half duplex mode, 10BASE-T  full duplex mode, 10BASE-T  half duplex mode
+Operational MAU type: 1000BaseTFD
+
+802.3 Link Aggregation
+Aggregation capability: Capable of being aggregated
+Aggregation status: Currently not in aggregation
+
+
+802.1 PVID: None
+802.1 PPVID: 
+802.1 VLAN:
+802.1 Protocol:

@@ -1,0 +1,26 @@
+
+Device ID: c4:42:68:ef:3e:88
+Port ID: c4:42:68:ef:3e:88
+Capabilities: Bridge
+System Name: ROOM-NVX-E-3E88.localdomain
+System description: The Ångström Distribution v2014.12 Linux 4.19.0+ #1 SMP Wed Jul 16 15:32:42 UTC 2025 armv7l
+Port description: eth0
+Management Address: 172.22.0.156
+Time To Live: 51
+
+
+802.3 MAC/PHY Configuration/Status
+Auto-negotiation support: Supported
+Auto-negotiation status: Enabled
+Auto-negotiation Advertised Capabilities: 1000BASE-T full duplex, 1000BASE-T half duplex
+Operational MAU type: 1000BaseTFD
+
+802.3 Link Aggregation
+Aggregation capability: Capable of being aggregated
+Aggregation status: Currently not in aggregation
+
+
+802.1 PVID: None
+802.1 PPVID: 
+802.1 VLAN:
+802.1 Protocol:

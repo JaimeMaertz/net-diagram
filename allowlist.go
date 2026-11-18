@@ -44,8 +44,9 @@ var allowed = map[string]bool{
 // portArg matches the per-port show commands: "show lldp remote-device detail 0/5" (p. 829) and
 // "show port description 0/5" (p. 490), with a slot/port or unit/slot/port argument only.
 var portArg = regexp.MustCompile(`^show (lldp remote-device detail|port description) \d+(/\d+){1,2}$` +
-	// Cisco: "show lldp neighbors gi1/0/5" (also te, fa, and the long forms)
-	`|^show lldp neighbors (?i:gi|te|fa|gigabitethernet|tengigabitethernet|fastethernet)\d+(/\d+){1,2}$` +
+	// Cisco: "show lldp neighbors gi1/0/5", or "gi5" on a unit running standalone (also te, fa, and the
+	// long forms)
+	`|^show lldp neighbors (?i:gi|te|fa|gigabitethernet|tengigabitethernet|fastethernet)\d+(/\d+){0,2}$` +
 	// TP-Link: "show lldp neighbor-information interface gigabitEthernet 1/0/5" (the switch's help)
 	`|^show lldp neighbor-information interface (fastEthernet|gigabitEthernet|two-gigabitEthernet|ten-gigabitEthernet) \d+/\d+/\d+$`)
 

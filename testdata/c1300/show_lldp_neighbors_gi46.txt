@@ -1,0 +1,24 @@
+
+Device ID: LAPTOP
+Port ID: 7c:cf:0f:78:fd:37
+Capabilities: Other
+System Name: 
+System description: 
+Port description: 
+Time To Live: 3579
+
+
+802.3 MAC/PHY Configuration/Status
+Auto-negotiation support: Supported
+Auto-negotiation status: Enabled
+Auto-negotiation Advertised Capabilities: 1000BASE-T full duplex
+Operational MAU type: Unknown MAU
+
+802.1 PVID: None
+802.1 PPVID: 
+802.1 VLAN:
+802.1 Protocol: 
+
+
+LLDP-MED capabilities: Capabilities
+LLDP-MED Device Type: Endpoint Class1

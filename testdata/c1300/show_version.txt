@@ -1,0 +1,10 @@
+Active-image: flash://system/images/image_c1300_4.1.9.94_official_key.bin
+  Version: 4.1.9.94
+  MD5 Digest: d53fe328c6560c52f0cbda016a081362
+  Date: 26-Aug-2026
+  Time: 00:35:39
+Inactive-image: flash://system/images/image_4.1.7.24.bin
+  Version: 4.1.7.24
+  MD5 Digest: fac373003a28d93a9c90fa9f3157cdb2
+  Date: 27-Aug-2025
+  Time: 13:11:30

@@ -1,0 +1,8 @@
+
+Total number of entries: 2
+
+
+  VLAN    Interface     IP address          HW address         status     
+--------------------- --------------- ------------------- --------------- 
+vlan 1     gi46       172.22.0.151    7c:cf:0f:78:fd:37   dynamic         
+vlan 1     gi46       172.22.0.248    7c:cf:0f:78:fd:37   dynamic

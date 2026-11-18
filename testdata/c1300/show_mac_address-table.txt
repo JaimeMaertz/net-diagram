@@ -1,0 +1,40 @@
+Flags: I - Internal usage VLAN
+Aging time is 300 sec
+
+    Vlan          Mac Address         Port       Type    
+------------ --------------------- ---------- ---------- 
+     1         00:0e:dd:bf:ef:65      gi24     dynamic   
+     1         00:0e:dd:bf:f1:99      gi22     dynamic   
+     1         00:0e:dd:c0:2e:66      gi25     dynamic   
+     1         00:0e:dd:c0:2e:98      gi23     dynamic   
+     1         00:0e:dd:44:66:08      gi24     dynamic   
+     1         00:0e:dd:44:66:16      gi22     dynamic   
+     1         00:0e:dd:44:70:5c      gi23     dynamic   
+     1         00:0e:dd:44:70:ae      gi25     dynamic   
+     1         00:1d:c1:a4:fd:76      gi14     dynamic   
+     1         00:60:74:0f:01:20      gi21     dynamic   
+     1         00:60:74:11:d3:16      gi13     dynamic   
+     1         00:60:74:11:d3:34      gi11     dynamic   
+     1         00:60:74:11:d3:4c      gi12     dynamic   
+     1         00:eb:f6:11:7a:65      gi26     dynamic   
+     1         54:b5:6c:bc:a3:7e      gi1      dynamic   
+     1         7c:cf:0f:78:fd:37      gi46     dynamic   
+     1         c4:42:68:7c:31:9d      gi28     dynamic   
+     1         c4:42:68:99:64:e4      gi26     dynamic   
+     1         c4:42:68:99:64:e5      gi26     dynamic   
+     1         c4:42:68:b4:06:b2      gi5      dynamic   
+     1         c4:42:68:b4:29:b6      gi4      dynamic   
+     1         c4:42:68:b4:2a:04      gi3      dynamic   
+     1         c4:42:68:c7:3d:84      gi18     dynamic   
+     1         c4:42:68:ea:3c:02      gi6      dynamic   
+     1         c4:42:68:ea:3c:c4      gi7      dynamic   
+     1         c4:42:68:ea:3c:ff      gi2      dynamic   
+     1         c4:42:68:ea:3d:7f      gi8      dynamic   
+     1         c4:42:68:ee:7b:11      gi14     dynamic   
+     1         c4:42:68:ef:3e:88      gi17     dynamic   
+     1         c4:42:68:ef:3e:b3      gi16     dynamic   
+     1         c4:42:68:ef:41:0a      gi15     dynamic   
+     1         c4:42:68:f2:89:8e      gi10     dynamic   
+     1         c4:57:46:70:cb:19      gi20     dynamic   
+     1         c4:57:46:70:cc:f3      gi19     dynamic   
+     1         d0:2c:39:00:1a:90       0         self

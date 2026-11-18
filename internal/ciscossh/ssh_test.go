@@ -5,7 +5,8 @@ import (
 )
 
 func TestPrompt(t *testing.T) {
-	for _, s := range []string{"\nC1300#", "\nC1300# ", "\nC1300(config)#", "\nSW-01(config-if)#", "C1300>"} {
+	for _, s := range []string{"\nC1300#", "\nC1300# ", "\nC1300(config)#", "\nSW-01(config-if)#", "C1300>",
+		"\nN\nSW-01(config)#SW-01(config)#"} {
 		if !promptRe.MatchString(s) {
 			t.Errorf("%q should be a prompt", s)
 		}
@@ -17,6 +18,9 @@ func TestPrompt(t *testing.T) {
 	}
 	if !confirmRe.MatchString("Overwrite file [startup-config].... (Y/N)[N] ?") {
 		t.Error("Y/N question not matched")
+	}
+	if !confirmRe.MatchString("Queue number 8 is reserved for special traffic\nAre you sure [y/n]?  (Y/N)[Y] ") {
+		t.Error("qos map Y/N question not matched")
 	}
 }
 

@@ -1,0 +1,69 @@
+Port      Description
+-------   -----------
+gi1       
+gi2       
+gi3       
+gi4       
+gi5       
+gi6       
+gi7       
+gi8       
+gi9       
+gi10      
+gi11      
+gi12      
+gi13      
+gi14      
+gi15      
+gi16      
+gi17      
+gi18      
+gi19      
+gi20      
+gi21      
+gi22      
+gi23      
+gi24      
+gi25      
+gi26      
+gi27      
+gi28      
+gi29      
+gi30      
+gi31      
+gi32      
+gi33      
+gi34      
+gi35      
+gi36      
+gi37      
+gi38      
+gi39      
+gi40      
+gi41      
+gi42      
+gi43      
+gi44      
+gi45      
+gi46      
+gi47      
+gi48      
+gi49      
+gi50      
+gi51      
+gi52      
+
+Ch        Description
+-------   -----------
+Po1       
+Po2       
+Po3       
+Po4       
+Po5       
+Po6       
+Po7       
+Po8       
+
+Bluetooth      Description
+------------   -----------
+bluetooth 0

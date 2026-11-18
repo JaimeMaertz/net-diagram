@@ -1,0 +1,38 @@
+
+System capability legend:
+B - Bridge; R - Router; W - Wlan Access Point; T - telephone;
+D - DOCSIS Cable Device; H - Host; r - Repeater;
+TP - Two Ports MAC Relay; S - S-VLAN; C - C-VLAN; O - Other
+
+  Port        Device ID         Port ID          System Name    Capabilities  TTL  
+--------- ----------------- ----------------- ----------------- ------------ ----- 
+gi2       c4:42:68:ea:3c:ff c4:42:68:ea:3c:ff ROOM-NVX-D-3CFF.l      B        49   
+                                              ocaldomain                           
+gi3       c4:42:68:b4:2a:04 c4:42:68:b4:2a:04 ROOM-NVX-D-2A04.l      B        54   
+                                              ocaldomain                           
+gi4       c4:42:68:b4:29:b6 c4:42:68:b4:29:b6 ROOM-NVX-D-29B6.l      B        54   
+                                              ocaldomain                           
+gi5       c4:42:68:b4:06:b2 c4:42:68:b4:06:b2 ROOM-NVX-D-06B2.l      B        55   
+                                              ocaldomain                           
+gi6       c4:42:68:ea:3c:02 c4:42:68:ea:3c:02 ROOM-NVX-D-3C02.l      B        50   
+                                              ocaldomain                           
+gi7       c4:42:68:ea:3c:c4 c4:42:68:ea:3c:c4 ROOM-NVX-D-3CC4.l      B        50   
+                                              ocaldomain                           
+gi8       c4:42:68:ea:3d:7f c4:42:68:ea:3d:7f ROOM-NVX-D-3D7F.l      B        50   
+                                              ocaldomain                           
+gi10      c4:42:68:f2:89:8e c4:42:68:f2:89:8e ROOM-NVX-E-898E.l      H        55   
+                                              ocaldomain                           
+gi14      c4:42:68:ee:7b:11 c4:42:68:ee:7b:11 ROOM-NVX-E-7B11.l      B        56   
+                                              ocaldomain                           
+gi15      c4:42:68:ef:41:0a c4:42:68:ef:41:0a ROOM-NVX-E-410A.l      B        46   
+                                              ocaldomain                           
+gi16      c4:42:68:ef:3e:b3 c4:42:68:ef:3e:b3 ROOM-NVX-E-3EB3.l      B        46   
+                                              ocaldomain                           
+gi17      c4:42:68:ef:3e:88 c4:42:68:ef:3e:88 ROOM-NVX-E-3E88.l      B        47   
+                                              ocaldomain                           
+gi18      c4:42:68:c7:3d:84 c4:42:68:c7:3d:84 ROOM-NVX-E-3D84.l      B        46   
+                                              ocaldomain                           
+gi26      00:eb:f6:11:7a:65 00:eb:f6:11:7a:65 ROOM-PRO-64E3.ROO      B        58   
+                                              M-PRO-64E3.crestr                    
+                                              on                                   
+gi46           LAPTOP       7c:cf:0f:78:fd:37                        O       3591

@@ -1,0 +1,68 @@
+ 
+Power-limit mode: Class based
+Usage threshold: 95%
+Trap: Disable
+Legacy Mode: Enable
+Inrush Test: Enable
+ 
+Unit Module           Nominal   Allocated    Temp     SW            PSE chipset      
+                      Power (W) Power (W)    (C)      Version       HW Revision      
+---- ---------------- --------- ------------ -------- ------------- -----------------
+1    C1300-48FP-4G    740       33 (4%)      36       0.4.4.80      SN202182 - 0x3400
+                                                                    SN202182 - 0x3400
+                                                                    SN202182 - 0x3400
+                                                                    SN202182 - 0x3400
+                                                                    SN202182 - 0x3400
+                                                                    SN202182 - 0x3400
+
+
+Interface  Admin      Oper        Power (W)         Class Device         Priority 
+---------- ---------- ----------- ----------------- ----- -------------- -------- 
+gi1        Auto       Fault       0.0               -                    low      
+gi2        Auto       Searching   0.0               -                    low      
+gi3        Auto       Searching   0.0               -                    low      
+gi4        Auto       Searching   0.0               -                    low      
+gi5        Auto       Searching   0.0               -                    low      
+gi6        Auto       Searching   0.0               -                    low      
+gi7        Auto       Searching   0.0               -                    low      
+gi8        Auto       Searching   0.0               -                    low      
+gi9        Auto       Searching   0.0               -                    low      
+gi10       Auto       On          7.207             0                    low      
+gi11       Auto       On          8.445             3                    low      
+gi12       Auto       On          8.135             3                    low      
+gi13       Auto       On          8.033             3                    low      
+gi14       Auto       Searching   0.0               -                    low      
+gi15       Auto       Searching   0.0               -                    low      
+gi16       Auto       Searching   0.0               -                    low      
+gi17       Auto       Searching   0.0               -                    low      
+gi18       Auto       Searching   0.0               -                    low      
+gi19       Auto       On          0.973             4                    low      
+gi20       Auto       Searching   0.0               -                    low      
+gi21       Auto       Fault       0.0               -                    low      
+gi22       Auto       Fault       0.0               -                    low      
+gi23       Auto       Fault       0.0               -                    low      
+gi24       Auto       Fault       0.0               -                    low      
+gi25       Auto       Fault       0.0               -                    low      
+gi26       Auto       Searching   0.0               -                    low      
+gi27       Auto       Searching   0.0               -                    low      
+gi28       Auto       Searching   0.0               -                    low      
+gi29       Auto       Searching   0.0               -                    low      
+gi30       Auto       Searching   0.0               -                    low      
+gi31       Auto       Searching   0.0               -                    low      
+gi32       Auto       Searching   0.0               -                    low      
+gi33       Auto       Searching   0.0               -                    low      
+gi34       Auto       Searching   0.0               -                    low      
+gi35       Auto       Searching   0.0               -                    low      
+gi36       Auto       Searching   0.0               -                    low      
+gi37       Auto       Searching   0.0               -                    low      
+gi38       Auto       Searching   0.0               -                    low      
+gi39       Auto       Searching   0.0               -                    low      
+gi40       Auto       Searching   0.0               -                    low      
+gi41       Auto       Searching   0.0               -                    low      
+gi42       Auto       Searching   0.0               -                    low      
+gi43       Auto       Searching   0.0               -                    low      
+gi44       Auto       Searching   0.0               -                    low      
+gi45       Auto       Searching   0.0               -                    low      
+gi46       Auto       Fault       0.0               -                    low      
+gi47       Auto       Searching   0.0               -                    low      
+gi48       Auto       Searching   0.0               -                    low

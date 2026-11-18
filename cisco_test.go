@@ -7,12 +7,12 @@ import (
 )
 
 func TestCiscoAllowlist(t *testing.T) {
-	for _, c := range append(append([]string{}, CiscoCommands...), "show lldp neighbors gi1/0/5", "show lldp neighbors te1/0/1") {
+	for _, c := range append(append([]string{}, CiscoCommands...), "show lldp neighbors gi1/0/5", "show lldp neighbors te1/0/1", "show lldp neighbors gi5") {
 		if !Allowed(c) {
 			t.Errorf("%q should be allowed", c)
 		}
 	}
-	for _, c := range []string{"show running-config", "write memory", "configure terminal", "show lldp neighbors gi1/0/5 x"} {
+	for _, c := range []string{"show running-config", "write memory", "configure terminal", "show lldp neighbors gi1/0/5 x", "show lldp neighbors gi5 x"} {
 		if Allowed(c) {
 			t.Errorf("%q must not be allowed", c)
 		}
@@ -167,5 +167,72 @@ func TestCiscoNetgearLink(t *testing.T) {
 	}
 	if !found {
 		t.Errorf("no Netgear 0/10 ↔ Cisco gi1/0/1 link: %+v", snap.Links)
+	}
+}
+
+// testdata/c1300: a real C1300-48FP-4G (firmware 4.1.9.94, ports named gi1..gi52 as a standalone unit)
+// on an AV network of DM NVX, a Crestron processor, Shure, QSC and a laptop. The NVXs and the processor
+// advertise LLDP's Bridge capability; none of them is a switch.
+func TestParseCiscoReal(t *testing.T) {
+	out, err := LoadOutputs("testdata/c1300")
+	if err != nil {
+		t.Fatal(err)
+	}
+	sw, err := ParseCisco("172.22.0.3", out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if sw.Model != "C1300-48FP-4G" || sw.Serial == "" || sw.Firmware != "4.1.9.94" || sw.Name != "ROOM-SWT-1A90" {
+		t.Errorf("identity: %q %q %q %q", sw.Model, sw.Serial, sw.Firmware, sw.Name)
+	}
+	if len(sw.Ports) != 52 || sw.Ports[0].Name != "gi1" || sw.Ports[51].Name != "gi52" {
+		t.Fatalf("ports: %d", len(sw.Ports))
+	}
+	byName := map[string]Port{}
+	for _, p := range sw.Ports {
+		byName[p.Name] = p
+	}
+	if p := byName["gi19"]; !p.Up || p.Speed != "100 Full" || p.PoEStatus != "On" || p.PoEmW == 0 {
+		t.Errorf("gi19: %+v", p)
+	}
+	if n := byName["gi26"].Neighbors; len(n) != 1 || n[0].MgmtIP != "172.22.0.1" || !isBridge(n[0]) {
+		t.Errorf("gi26 neighbor: %+v", n)
+	}
+	if len(sw.ARP) != 2 || sw.ARP[0].IP != "172.22.0.151" || sw.ARP[0].MAC != "7C:CF:0F:78:FD:37" {
+		t.Errorf("arp: %+v", sw.ARP)
+	}
+
+	snap := Build([]Switch{sw}, DeviceDB{}, OUI{}, nil, nil)
+	if len(snap.Links) != 0 {
+		t.Errorf("an NVX or the processor drawn as a switch: %+v", snap.Links)
+	}
+	found := false
+	for _, d := range snap.Devices {
+		if d.Port == "gi14" && strings.HasPrefix(d.Name, "ROOM-NVX-E-7B11") {
+			found = true
+		}
+	}
+	if !found {
+		t.Error("the NVX encoder on gi14 is not a device")
+	}
+}
+
+func TestEndpointBridge(t *testing.T) {
+	sw := Neighbor{ChassisID: "11:22:33:44:55:66", CapsEnabled: "bridge", SystemDesc: "Some switch"}
+	alone := Port{MACs: []MACEntry{{MAC: "11:22:33:44:55:66"}}}
+	behind := Port{MACs: []MACEntry{{MAC: "11:22:33:44:55:66"}, {MAC: "AA:BB:CC:00:00:01"}}}
+	if !isEndpointBridge(sw, alone) {
+		t.Error("a bridge with nothing behind it is an endpoint")
+	}
+	if isEndpointBridge(sw, behind) {
+		t.Error("a bridge with a MAC behind it is a switch")
+	}
+	nvx := Neighbor{ChassisID: "c4:42:68:00:00:20", CapsEnabled: "bridge", SystemDesc: "The Ångström Distribution v2014.12 Linux"}
+	if !isEndpointBridge(nvx, behind) {
+		t.Error("an NVX is an endpoint even with its Dante card's MAC behind it")
+	}
+	cp := Neighbor{ChassisID: "00:eb:f6:00:00:01", CapsEnabled: "bridge", SystemDesc: "Crestron DigitalMedia 1.0 (nvx) Linux"}
+	if !isEndpointBridge(cp, behind) {
+		t.Error("a Crestron processor is an endpoint")
 	}
 }
