@@ -11,7 +11,7 @@ import (
 // CiscoCommands are run on a Cisco Catalyst 1300 / CBS350 (Cisco's small-business CLI), in this
 // order. Per-port LLDP detail follows from "show lldp neighbors" (CiscoPortCommands).
 //
-// The syntax is Cisco's small-business CLI as internal/ciscossh speaks it; each command's output
+// The syntax is Cisco's small-business CLI as internal/switchcli speaks it; each command's output
 // format is confirmed against the CLI guide and a real switch before its parser is trusted.
 var CiscoCommands = []string{
 	"show version",
@@ -40,7 +40,7 @@ func CiscoPortCommands(out map[string]string) []string {
 }
 
 // CollectCisco runs every Cisco command through run and returns their outputs. A command the
-// switch refuses (ciscossh.CommandError) is kept as its error text rather than stopping the
+// switch refuses (switchcli.CommandError) is kept as its error text rather than stopping the
 // read, since models and firmware differ in what they offer (a switch without PoE has no
 // "show power inline").
 func CollectCisco(run func(string) (string, error)) (map[string]string, error) {

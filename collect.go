@@ -3,39 +3,39 @@ package netdiagram
 import (
 	"errors"
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 
-	"github.com/JaimeMaertz/net-diagram/internal/ciscossh"
+	"github.com/JaimeMaertz/net-diagram/internal/switchcli"
 )
 
 // Collect logs into a switch and runs its vendor's commands, returning each command's output.
 // Only allowlisted commands are sent. Session setup is the one exception, and it changes no
-// configuration: Netgear's "enable", and the "terminal datadump" ciscossh sends to stop Cisco's
-// paging for that session.
+// configuration: "enable", and the paging-off line for that session ("terminal datadump" on a
+// Cisco, "terminal length 0" on a Netgear).
+//
+// Cisco and Netgear sessions are internal/switchcli's, which find the prompt where the switch stops
+// rather than at the first prompt-like text, so a login banner holding "SITE#" or "login:" can't
+// derail them.
 func Collect(vendor, host, user, password string) (map[string]string, error) {
 	switch vendor {
 	case "Netgear":
-		s, err := DialTelnet(host, user, password, "")
+		s, err := dialNetgear(host, user, password)
 		if err != nil {
 			return nil, err
 		}
 		defer s.Close()
-		return CollectNetgear(s.Run)
+		return CollectNetgear(readOnly(s, true))
 	case "Cisco":
-		s, err := ciscossh.Dial(host, user, password)
+		s, err := switchcli.Dial(host, user, password)
 		if err != nil {
 			return nil, err
 		}
 		defer s.Close()
-		return CollectCisco(func(cmd string) (string, error) {
-			if !Allowed(cmd) {
-				return "", fmt.Errorf("refused to send %q: not on the read-only allowlist", cmd)
-			}
-			return s.Run(cmd)
-		})
+		return CollectCisco(readOnly(s, false))
 	case "TP-Link":
 		s, err := dialTPLink(host, user, password)
 		if err != nil {
@@ -45,6 +45,43 @@ func Collect(vendor, host, user, password string) (map[string]string, error) {
 		return CollectTPLink(s.Run)
 	}
 	return nil, fmt.Errorf("%s switches can't be read yet", vendor)
+}
+
+// readOnly is a session's Run, sending only allowlisted commands. With refusedAsText a command the
+// switch refuses returns what it printed instead of an error, so one show this firmware lacks leaves
+// its parser an empty table rather than ending the read.
+func readOnly(s *switchcli.Switch, refusedAsText bool) func(string) (string, error) {
+	return func(cmd string) (string, error) {
+		if !Allowed(cmd) {
+			return "", fmt.Errorf("refused to send %q: not on the read-only allowlist", cmd)
+		}
+		out, err := s.Run(cmd)
+		var refused *switchcli.CommandError
+		if refusedAsText && errors.As(err, &refused) {
+			return refused.Output, nil
+		}
+		return out, err
+	}
+}
+
+// dialNetgear logs into a Netgear over telnet (open as the switch comes), else SSH when telnet can't
+// be reached at all (turned off), never after a refused password. An address with its own port is one
+// transport's, so it gets no SSH try.
+func dialNetgear(host, user, password string) (*switchcli.Switch, error) {
+	o := switchcli.Options{Host: host, User: user, Password: password, Family: switchcli.Netgear, Transport: "telnet"}
+	s, telErr := switchcli.Open(o)
+	if telErr == nil || errors.Is(telErr, switchcli.ErrAuth) {
+		return s, telErr
+	}
+	if _, _, err := net.SplitHostPort(host); err == nil {
+		return nil, telErr
+	}
+	o.Transport = "ssh"
+	s, sshErr := switchcli.Open(o)
+	if sshErr == nil || errors.Is(sshErr, switchcli.ErrAuth) {
+		return s, sshErr
+	}
+	return nil, fmt.Errorf("telnet: %v; SSH: %v", telErr, sshErr)
 }
 
 // dialTPLink logs into a TP-Link JetStream switch over SSH, else telnet. Telnet is tried only when

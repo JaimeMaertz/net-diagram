@@ -144,25 +144,25 @@ useful thing to send if a switch's output doesn't parse.
 
 ## Source layout
 
-| Path                                  | What it holds                                                                                                         |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `cmd/net-diagram/`                    | the program: the local server and its API, `discover` and `draw`, and the web page (`web/index.html`, embedded)       |
-| `cmd/probe/`                          | saves one switch's raw output, for fixtures                                                                           |
-| `scan.go`                             | runs pinger's sweep, finds switch makers, probes their ports, checks for logins                                       |
-| `model.go`                            | the snapshot: switches, ports, neighbors, devices, links                                                              |
-| `netgear.go`, `cisco.go`, `tplink.go` | each vendor's command list and parser                                                                                 |
-| `tables.go`                           | shared readers for CLI tables and `Key.... value` lines                                                               |
-| `correlate.go`                        | links, placement, grouping and naming                                                                                 |
-| `accesspoint.go`                      | finding access points (LLDP, database, SSH and web fingerprints) and the devices through them                         |
-| `gateway.go`                          | the PC's default gateways and marking the gateway device                                                              |
-| `svg.go`                              | the drawing                                                                                                           |
-| `telnet.go`                           | the CLI session, over Telnet or SSH (Netgear, TP-Link): login, pager, help queries                                    |
-| `ssh.go`                              | the interactive SSH shell for CLIs used like a terminal (TP-Link)                                                     |
-| `internal/ciscossh/`                  | the SSH CLI session (Cisco)                                                                                           |
-| `allowlist.go`                        | every command net-diagram may send, each a `show` or a help query under `show`                                        |
-| `cred_windows.go`                     | Credential Manager                                                                                                    |
-| `devicedb.go`                         | reading pinger's `devices.json` and `oui.txt`                                                                         |
-| `testdata/`                           | real M4250, TP-Link and C1300 output (MACs, names and serials altered), Cisco's guide examples, a two-switch snapshot |
+| Path                                  | What it holds                                                                                                                     |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `cmd/net-diagram/`                    | the program: the local server and its API, `discover` and `draw`, and the web page (`web/index.html`, embedded)                   |
+| `cmd/probe/`                          | saves one switch's raw output, for fixtures                                                                                       |
+| `scan.go`                             | runs pinger's sweep, finds switch makers, probes their ports, checks for logins                                                   |
+| `model.go`                            | the snapshot: switches, ports, neighbors, devices, links                                                                          |
+| `netgear.go`, `cisco.go`, `tplink.go` | each vendor's command list and parser                                                                                             |
+| `tables.go`                           | shared readers for CLI tables and `Key.... value` lines                                                                           |
+| `correlate.go`                        | links, placement, grouping and naming                                                                                             |
+| `accesspoint.go`                      | finding access points (LLDP, database, SSH and web fingerprints) and the devices through them                                     |
+| `gateway.go`                          | the PC's default gateways and marking the gateway device                                                                          |
+| `svg.go`                              | the drawing                                                                                                                       |
+| `internal/switchcli/`                 | the read-only CLI session for Netgear (Telnet, else SSH) and Cisco (SSH): a login banner that looks like a prompt can't derail it |
+| `telnet.go`                           | the CLI session for TP-Link, over Telnet or SSH: login, pager, help queries                                                       |
+| `ssh.go`                              | the interactive SSH shell for CLIs used like a terminal (TP-Link)                                                                 |
+| `allowlist.go`                        | every command net-diagram may send, each a `show` or a help query under `show`                                                    |
+| `cred_windows.go`                     | Credential Manager                                                                                                                |
+| `devicedb.go`                         | reading pinger's `devices.json` and `oui.txt`                                                                                     |
+| `testdata/`                           | real M4250, TP-Link and C1300 output (MACs, names and serials altered), Cisco's guide examples, a two-switch snapshot             |
 
 ## Related tools
 
